@@ -1,0 +1,14 @@
+
+/* Custom global styles */
+:root {
+    --primary-color: #6B297A;
+    --accent-color: #C9E165;
+    --primary-color-light: #8b3d9d;
+}
+
+
+
+/* Apply Almarai font globally */
+body {
+    font-family: 'Almarai', sans-serif !important;
+}
