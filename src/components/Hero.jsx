@@ -2,6 +2,13 @@ import React from "react";
 import headerImage from "../assets/Header.jpg"; // Importing image
 
 const Hero = () => {
+  const handleClick = (e, targetId) => {
+    e.preventDefault();
+    const element = document.getElementById(targetId);
+    if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+    }
+};
   return (
     <header
       className="relative flex items-center justify-center text-white bg-center bg-cover bg-fixed h-[100vh] font-['Almarai']"
@@ -18,7 +25,7 @@ const Hero = () => {
         </h1>
 
         {/* Booking Button */}
-        <button className="mt-6 bg-[#6B297A] text-white px-6 py-3 rounded-full hover:bg-[#C9E165] hover:text-[#6B297A] transition-all duration-300  font-['Almarai']">
+        <button className="mt-6 bg-[#6B297A] text-white px-6 py-3 rounded-full hover:bg-[#C9E165] hover:text-[#6B297A] transition-all duration-300  font-['Almarai']" href="#appointment" onClick={(e) => handleClick(e, 'appointment')}>
           احجز موعدك
         </button>
       </div>

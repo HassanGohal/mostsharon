@@ -80,7 +80,7 @@ const services = [
 
 const Services = () => {
     return (
-        <section className="py-16 bg-white font-['Almarai']" id="services">
+        <section className="py-28 bg-white font-['Almarai']" id="services">
             <div className="container mx-auto px-4">
                 {/* عنوان القسم */}
                 <div className="text-center mb-12">
