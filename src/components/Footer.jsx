@@ -1,5 +1,5 @@
 import React from "react";
-import { FaFacebookF, FaTwitter, FaInstagram, FaPhone, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
+import { FaSnapchat,FaWhatsapp, FaTwitter, FaInstagram, FaPhone, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 import logo from "../assets/logo.png"; // Adjust path to your logo
 
 const Footer = () => {
@@ -30,23 +30,26 @@ const Footer = () => {
           <div className="text-center md:text-left">
             <h3 className="text-lg font-bold mb-4 text-[#C9E165]">تواصل معنا</h3>
             <p className="flex items-center justify-center md:justify-start text-gray-300">
-              <FaMapMarkerAlt className="ml-2" /> الرياض، المملكة العربية السعودية
+              <FaMapMarkerAlt className="mx-2" /> الرياض، المملكة العربية السعودية
             </p>
             <p className="flex items-center justify-center md:justify-start text-gray-300">
-              <FaPhone className="ml-2" /> 920012345
+              <FaPhone className="mx-2  " />  920023255
             </p>
             <p className="flex items-center justify-center md:justify-start text-gray-300">
-              <FaEnvelope className="ml-2" /> info@company.com
+              <FaWhatsapp className="mx-2" /> 0532213523
+            </p>
+            <p className="flex items-center justify-center md:justify-start text-gray-300">
+              <FaEnvelope className="mx-2" /> info@company.com
             </p>
             {/* Social Media */}
             <div className="flex justify-center md:justify-start mt-4 space-x-4">
-              <a href="#" className="p-2 bg-[#C9E165] rounded-full text-[#6B297A] hover:bg-white transition">
-                <FaFacebookF />
+              <a href="https://snapchat.com/add/mustasharun" target="_blank" className="p-2 bg-[#C9E165] rounded-full text-[#6B297A] hover:bg-white transition">
+                <FaSnapchat />
               </a>
-              <a href="#" className="p-2 bg-[#C9E165] rounded-full text-[#6B297A] hover:bg-white transition">
+              <a href="https://x.com/mustasharun" target="_blank" className="p-2 bg-[#C9E165] rounded-full text-[#6B297A] hover:bg-white transition">
                 <FaTwitter />
               </a>
-              <a href="#" className="p-2 bg-[#C9E165] rounded-full text-[#6B297A] hover:bg-white transition">
+              <a href="https://instagram.com/mustasharun" target="_blank" className="p-2 bg-[#C9E165] rounded-full text-[#6B297A] hover:bg-white transition">
                 <FaInstagram />
               </a>
             </div>

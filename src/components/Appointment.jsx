@@ -48,7 +48,7 @@ const Appointment = () => {
 
   return (
     <section
-      className="relative py-16 text-white font-['Almarai'] rounded-3xl overflow-hidden bg-cover bg-center h-auto flex items-center"
+      className="relative py-28 text-white font-['Almarai'] rounded-3xl overflow-hidden bg-cover bg-center h-auto flex items-center"
       id="appointment"
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
