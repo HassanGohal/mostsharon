@@ -164,6 +164,8 @@ const Appointment = () => {
             <div>
               {/* Doctor Selection */}
               <div className="flex items-center border border-gray-300 px-4 py-2 rounded-lg w-full flex-row-reverse">
+              <FaUserMd className="text-[#6B297A] ml-2 text-2xl" />
+
                 <select
                   className="bg-transparent outline-none text-gray-700 w-full text-right text-sm"
                   name="doctor"
@@ -176,7 +178,6 @@ const Appointment = () => {
                   <option value="د. محمد">د. محمد</option>
                   <option value="د. علي">د. علي</option>
                 </select>
-                <FaUserMd className="text-[#6B297A] ml-2 text-2xl" />
               </div>
             </div>
 
@@ -184,6 +185,8 @@ const Appointment = () => {
             <div className="space-y-4">
               {/* Clinic Selection */}
               <div className="flex items-center border border-gray-300 px-4 py-2 rounded-lg w-full flex-row-reverse mb-4">
+              <FaClinicMedical className="text-[#6B297A] ml-2 text-2xl" />
+
                 <select
                   className="bg-transparent outline-none text-gray-700 w-full text-right text-sm"
                   name="clinic"
@@ -196,12 +199,13 @@ const Appointment = () => {
                   <option value="العيادة 1">العيادة 1</option>
                   <option value="العيادة 2">العيادة 2</option>
                 </select>
-                <FaClinicMedical className="text-[#6B297A] ml-2 text-2xl" />
               </div>
               
 
               {/* Appointment Date */}
               <div className="flex items-center border border-gray-300 px-4 py-2 rounded-lg w-full flex-row-reverse">
+              <FaCalendarAlt className="text-[#6B297A] text-2xl ml-2" />
+
                 <input
                   type="date"
                   id="appointmentDate"
@@ -212,7 +216,6 @@ const Appointment = () => {
                   required
                   onClick={(e) => e.target.showPicker()}
                 />
-                <FaCalendarAlt className="text-[#6B297A] text-2xl ml-2" />
               </div>
             </div>
           </div>
@@ -222,7 +225,6 @@ const Appointment = () => {
             type="submit"
             className="flex items-center justify-center bg-[#6B297A] text-white px-6 py-3 rounded-full hover:bg-[#C9E165] hover:text-[#6B297A] transition-all duration-300 w-full md:w-auto mt-4"
           >
-            <FaSearch className="ml-2" />
             <span>احجز الآن</span>
           </button>
         </form>
