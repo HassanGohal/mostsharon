@@ -159,51 +159,49 @@ const Appointment = () => {
           </div>
 
           {/* Appointment Details */}
-          {/* Grid Container - Align Right */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 justify-end text-right">
-
-            {/* Clinic Selection */}
-            <div className="flex items-center border border-gray-300 px-4 py-2 rounded-lg w-full flex-row-reverse">
-              <select
-                className="bg-transparent outline-none text-gray-700 w-full text-right text-sm"
-                name="clinic"
-                value={formData.clinic}
-                onChange={handleChange}
-                required
-                dir="rtl"
-              >
-                <option value="">العيادة</option>
-                <option value="العيادة 1">العيادة 1</option>
-                <option value="العيادة 2">العيادة 2</option>
-              </select>
-              <FaClinicMedical className="text-[#6B297A] ml-2 text-2xl" />
+          <div className="grid grid-cols-2 gap-4">
+            {/* Right Column */}
+            <div>
+              {/* Doctor Selection */}
+              <div className="flex items-center border border-gray-300 px-4 py-2 rounded-lg w-full flex-row-reverse">
+                <select
+                  className="bg-transparent outline-none text-gray-700 w-full text-right text-sm"
+                  name="doctor"
+                  value={formData.doctor}
+                  onChange={handleChange}
+                  required
+                  dir="rtl"
+                >
+                  <option value="">الطبيب</option>
+                  <option value="د. محمد">د. محمد</option>
+                  <option value="د. علي">د. علي</option>
+                </select>
+                <FaUserMd className="text-[#6B297A] ml-2 text-2xl" />
+              </div>
             </div>
 
-            {/* Doctor Selection */}
-            <div className="flex items-center border border-gray-300 px-4 py-2 rounded-lg w-full flex-row-reverse">
-              <select
-                className="bg-transparent outline-none text-gray-700 w-full text-right text-sm"
-                name="doctor"
-                value={formData.doctor}
-                onChange={handleChange}
-                required
-                dir="rtl"
-              >
-                <option value="">الطبيب</option>
-                <option value="د. محمد">د. محمد</option>
-                <option value="د. علي">د. علي</option>
-              </select>
-              <FaUserMd className="text-[#6B297A] ml-2 text-2xl" />
-            </div>
+            {/* Left Column */}
+            <div className="space-y-4">
+              {/* Clinic Selection */}
+              <div className="flex items-center border border-gray-300 px-4 py-2 rounded-lg w-full flex-row-reverse mb-4">
+                <select
+                  className="bg-transparent outline-none text-gray-700 w-full text-right text-sm"
+                  name="clinic"
+                  value={formData.clinic}
+                  onChange={handleChange}
+                  required
+                  dir="rtl"
+                >
+                  <option value="">العيادة</option>
+                  <option value="العيادة 1">العيادة 1</option>
+                  <option value="العيادة 2">العيادة 2</option>
+                </select>
+                <FaClinicMedical className="text-[#6B297A] ml-2 text-2xl" />
+              </div>
+              
 
-            {/* Appointment Date - Fully Right-Aligned */}
-            <div className="relative w-full flex-row-reverse">
-              {/* Clickable Wrapper */}
-              <div
-                className="flex items-center border border-gray-300 px-4 py-2 rounded-lg w-full cursor-pointer"
-                onClick={() => document.getElementById("appointmentDate").showPicker()} // Opens Date Picker
-              >
-                {/* Date Input - Hides Default Icon & Aligns Right */}
+              {/* Appointment Date */}
+              <div className="flex items-center border border-gray-300 px-4 py-2 rounded-lg w-full flex-row-reverse">
                 <input
                   type="date"
                   id="appointmentDate"
@@ -212,15 +210,12 @@ const Appointment = () => {
                   value={formData.appointmentDate}
                   onChange={handleChange}
                   required
+                  onClick={(e) => e.target.showPicker()}
                 />
-                {/* Custom Date Icon */}
                 <FaCalendarAlt className="text-[#6B297A] text-2xl ml-2" />
               </div>
             </div>
-
           </div>
-
-
 
           {/* Submit Button */}
           <button
