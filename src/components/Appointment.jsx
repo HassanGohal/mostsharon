@@ -48,7 +48,7 @@ const Appointment = () => {
 
   return (
     <section
-      className="relative py-28 text-white font-['Almarai'] rounded-3xl overflow-hidden bg-cover bg-center h-auto flex items-center"
+      className="relative py-16 text-white font-['Almarai'] rounded-3xl overflow-hidden bg-cover bg-center h-auto flex items-center"
       id="appointment"
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
@@ -68,21 +68,9 @@ const Appointment = () => {
         >
           {/* Patient Details */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
             {/* Gender */}
             <div className="flex items-center px-4 py-2 rounded-lg w-full justify-end">
-              <label className="flex items-center ml-4">
-                <input
-                  type="radio"
-                  name="gender"
-                  value="ذكر"
-                  className="hidden peer"
-                  checked={formData.gender === "ذكر"}
-                  onChange={handleChange}
-                />
-                <span className="px-3 py-1 text-[#6B297A] border border-gray-300 rounded-lg cursor-pointer peer-checked:bg-[#6B297A] peer-checked:text-white">
-                  ذكر
-                </span>
-              </label>
               <label className="flex items-center ml-4">
                 <input
                   type="radio"
@@ -96,16 +84,31 @@ const Appointment = () => {
                   أنثى
                 </span>
               </label>
+              <label className="flex items-center ml-4">
+                <input
+                  type="radio"
+                  name="gender"
+                  value="ذكر"
+                  className="hidden peer"
+                  checked={formData.gender === "ذكر"}
+                  onChange={handleChange}
+                />
+                <span className="px-3 py-1 text-[#6B297A] border border-gray-300 rounded-lg cursor-pointer peer-checked:bg-[#6B297A] peer-checked:text-white">
+                  ذكر
+                </span>
+              </label>
               <span className="text-gray-700 mx-4">الجنس</span>
               <FaVenusMars className="text-[#6B297A] ml-2 text-2xl" />
             </div>
+
+
 
             {/* Name */}
             <div className="flex items-center border border-gray-300 px-4 py-2 rounded-lg w-full">
               <input
                 type="text"
                 placeholder="الاسم"
-                className="bg-transparent outline-none text-gray-700 w-full text-right"
+                className="bg-transparent outline-none text-gray-700 w-full text-right text-sm"
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
@@ -114,94 +117,110 @@ const Appointment = () => {
               <FaUser className="text-[#6B297A] ml-2 text-2xl" />
             </div>
 
+
+
             {/* Birthdate */}
+            {/* Age Input Field */}
             <div className="flex items-center border border-gray-300 px-4 py-2 rounded-lg w-full">
-              <FaCalendarAlt className="text-[#6B297A] ml-2 text-2xl" />
+              {/* Age Input */}
               <input
-                type="date"
-                className="bg-transparent outline-none text-gray-700 w-full"
-                name="birthdate"
-                value={formData.birthdate}
+                type="number"
+                className="bg-transparent outline-none text-gray-700 w-full text-right"
+                name="age"
+                value={formData.age}
                 onChange={handleChange}
+                placeholder="العمر"
+                min="1" // Prevent negative values
                 required
               />
+
+              {/* Age Icon */}
+              <FaCalendarAlt className="text-[#6B297A] text-2xl ml-2" />
             </div>
+
+
+
+
 
             {/* Mobile Number */}
             <div className="flex items-center border border-gray-300 px-4 py-2 rounded-lg w-full">
-              <FaPhone className="text-[#6B297A] ml-2 text-2xl" />
               <input
                 type="tel"
                 placeholder="رقم الجوال"
-                className="bg-transparent outline-none text-gray-700 w-full"
+                className="bg-transparent outline-none text-gray-700 w-full text-right text-sm"
                 name="mobile"
                 value={formData.mobile}
                 onChange={handleChange}
                 required
               />
+              <FaPhone className="text-[#6B297A] ml-2 text-2xl" />
+
             </div>
           </div>
 
           {/* Appointment Details */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+          {/* Grid Container - Align Right */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 justify-end text-right">
+
             {/* Clinic Selection */}
-            <div className="flex items-center border border-gray-300 px-4 py-2 rounded-lg w-full">
-              <FaClinicMedical className="text-[#6B297A] ml-2 text-2xl" />
+            <div className="flex items-center border border-gray-300 px-4 py-2 rounded-lg w-full flex-row-reverse">
               <select
-                className="bg-transparent outline-none text-gray-700 w-full"
+                className="bg-transparent outline-none text-gray-700 w-full text-right text-sm"
                 name="clinic"
                 value={formData.clinic}
                 onChange={handleChange}
                 required
+                dir="rtl"
               >
                 <option value="">العيادة</option>
                 <option value="العيادة 1">العيادة 1</option>
                 <option value="العيادة 2">العيادة 2</option>
               </select>
+              <FaClinicMedical className="text-[#6B297A] ml-2 text-2xl" />
             </div>
 
             {/* Doctor Selection */}
-            <div className="flex items-center border border-gray-300 px-4 py-2 rounded-lg w-full">
-              <FaUserMd className="text-[#6B297A] ml-2 text-2xl" />
+            <div className="flex items-center border border-gray-300 px-4 py-2 rounded-lg w-full flex-row-reverse">
               <select
-                className="bg-transparent outline-none text-gray-700 w-full"
+                className="bg-transparent outline-none text-gray-700 w-full text-right text-sm"
                 name="doctor"
                 value={formData.doctor}
                 onChange={handleChange}
                 required
+                dir="rtl"
               >
                 <option value="">الطبيب</option>
                 <option value="د. محمد">د. محمد</option>
                 <option value="د. علي">د. علي</option>
               </select>
+              <FaUserMd className="text-[#6B297A] ml-2 text-2xl" />
             </div>
 
-            {/* Date Selection */}
-            <div className="flex items-center border border-gray-300 px-4 py-2 rounded-lg w-full">
-              <FaCalendarAlt className="text-[#6B297A] ml-2 text-2xl" />
-              <input
-                type="date"
-                className="bg-transparent outline-none text-gray-700 w-full"
-                name="appointmentDate"
-                value={formData.appointmentDate}
-                onChange={handleChange}
-                required
-              />
+            {/* Appointment Date - Fully Right-Aligned */}
+            <div className="relative w-full flex-row-reverse">
+              {/* Clickable Wrapper */}
+              <div
+                className="flex items-center border border-gray-300 px-4 py-2 rounded-lg w-full cursor-pointer"
+                onClick={() => document.getElementById("appointmentDate").showPicker()} // Opens Date Picker
+              >
+                {/* Date Input - Hides Default Icon & Aligns Right */}
+                <input
+                  type="date"
+                  id="appointmentDate"
+                  className="bg-transparent outline-none text-gray-700 w-full text-right cursor-pointer appearance-none [&::-webkit-calendar-picker-indicator]:hidden"
+                  name="appointmentDate"
+                  value={formData.appointmentDate}
+                  onChange={handleChange}
+                  required
+                />
+                {/* Custom Date Icon */}
+                <FaCalendarAlt className="text-[#6B297A] text-2xl ml-2" />
+              </div>
             </div>
 
-            {/* Time Selection */}
-            <div className="flex items-center border border-gray-300 px-4 py-2 rounded-lg w-full">
-              <FaCalendarAlt className="text-[#6B297A] ml-2 text-2xl" />
-              <input
-                type="time"
-                className="bg-transparent outline-none text-gray-700 w-full"
-                name="appointmentTime"
-                value={formData.appointmentTime}
-                onChange={handleChange}
-                required
-              />
-            </div>
           </div>
+
+
 
           {/* Submit Button */}
           <button
