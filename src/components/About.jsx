@@ -33,7 +33,7 @@ const About = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Vision Card */}
           <motion.div
-            className="group bg-white p-8 rounded-3xl shadow-lg border-2 border-transparent hover:border-[#6B297A] hover:bg-[#F0F8E2] transition-all duration-300 flex flex-col items-center text-center"
+            className="group bg-white p-8 rounded-3xl shadow-xl border-2 border-transparent  hover:shadow-2xl transition-all duration-300 flex flex-col items-center text-center"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
@@ -54,7 +54,7 @@ const About = () => {
 
           {/* Goal Card */}
           <motion.div
-            className="group bg-white p-8 rounded-3xl shadow-lg border-2 border-transparent hover:border-[#6B297A] hover:bg-[#F0F8E2] transition-all duration-300 flex flex-col items-center text-center"
+            className="group bg-white p-8 rounded-3xl shadow-xl border-2 border-transparent  hover:shadow-2xl transition-all duration-300 flex flex-col items-center text-center"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
@@ -76,7 +76,7 @@ const About = () => {
 
           {/* Mission Card */}
           <motion.div
-            className="group bg-white p-8 rounded-3xl shadow-lg border-2 border-transparent hover:border-[#6B297A] hover:bg-[#F0F8E2] transition-all duration-300 flex flex-col items-center text-center"
+            className="group bg-white p-8 rounded-3xl shadow-xl border-2 border-transparent  hover:shadow-2xl transition-all duration-300 flex flex-col items-center text-center"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}

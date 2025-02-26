@@ -60,7 +60,7 @@ const App = () => {
           <Appointment />
         </div>
       </MainContainer>
-      <Footer data-aos="fade-up" />
+      <Footer  />
     </div>
   );
 };

@@ -95,8 +95,8 @@ const Services = () => {
                     {services.map((service) => (
                         <div
                             key={service.id}
-                            className="border border-gray-200 rounded-3xl shadow-md transition-all duration-300 p-6 w-full text-right hover:shadow-xl"
-                        >
+                            className="group bg-white p-8 rounded-3xl shadow-md border border-gray-200 transition-all duration-300 flex flex-col items-center text-center hover:shadow-xl"
+                            >
                             {/* أيقونة وعنوان الخدمة */}
                             <div className="flex flex-row-reverse items-center gap-4 mb-4">
                                 <div className={`${service.bgColor} p-3 rounded-xl`}>
