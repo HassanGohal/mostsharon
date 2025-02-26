@@ -25,6 +25,19 @@ const Appointment = () => {
   // Update form data state on input change
   const handleChange = (e) => {
     const { name, value } = e.target;
+    
+    // Special handling for appointmentDate to prevent past dates
+    if (name === 'appointmentDate') {
+      const selectedDate = new Date(value);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0); // Reset time to start of day for fair comparison
+      
+      if (selectedDate < today) {
+        // If selected date is in the past, don't update the state
+        return;
+      }
+    }
+
     setFormData((prev) => ({
       ...prev,
       [name]: value,
@@ -204,6 +217,11 @@ const Appointment = () => {
                 onChange={handleChange}
                 min={new Date().toISOString().split('T')[0]}
                 required
+                onClick={(e) => {
+                  if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                    e.target.showPicker();
+                  }
+                }}
               />
             </div>
           </div>
