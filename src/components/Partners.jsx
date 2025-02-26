@@ -1,8 +1,11 @@
 import React from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+import "swiper/css";
 import bupa from "../assets/Bupa.png";
 import tawuniya from "../assets/Tawuniya-01.png";
 import medgulf from "../assets/Medgulf.png";
-import rajhi from "../assets/Al-Rajhi-Takaful.png"; // Temporary logos
+import rajhi from "../assets/Al-Rajhi-Takaful.png";
 
 const partners = [
   { id: 1, name: "بوبا العربية", image: bupa },
@@ -15,7 +18,7 @@ const partners = [
 
 const Partners = () => {
   return (
-    <section className="py-16 bg-white font-['Almarai'] text-center" id="partners">
+    <section className="py-16 bg-white font-['Almarai'] text-center relative overflow-hidden" id="partners">
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <div className="mb-12">
@@ -25,16 +28,33 @@ const Partners = () => {
           </p>
         </div>
 
-        {/* Partner Logos Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-8 justify-center">
-          {partners.map((partner) => (
-            <div
-              key={partner.id}
-              className="bg-white rounded-[2rem] p-6 border-2 border-transparent hover:border-[#C9E165] transform hover:-translate-y-2 transition-all duration-300 flex justify-center items-center"
-            >
-              <img src={partner.image} alt={partner.name} className="h-32 w-auto object-contain" />
-            </div>
-          ))}
+        {/* Swiper Carousel */}
+        <div className="relative w-full">
+          {/* Left & Right Gradients */}
+          <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-white to-transparent pointer-events-none"></div>
+          <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-white to-transparent pointer-events-none"></div>
+
+          <Swiper
+            slidesPerView={4} // Show 2 items by default
+            spaceBetween={20} 
+            loop={true}
+            autoplay={{  }}
+            breakpoints={{
+              640: { slidesPerView: 3 },
+              1024: { slidesPerView: 4 },
+            }}
+            modules={[Autoplay]}
+             speed={1200}
+            className="relative"
+          >
+            {partners.map((partner) => (
+              <SwiperSlide key={partner.id} className="flex justify-center items-center">
+                <div className="bg-white rounded-[2rem] p-6 border-2 border-transparent  transform transition-all duration-300 flex justify-center items-center">
+                  <img src={partner.image} alt={partner.name} className="h-32 w-auto object-contain" />
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </div>
       </div>
     </section>
