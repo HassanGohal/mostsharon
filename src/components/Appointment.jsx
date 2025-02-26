@@ -14,7 +14,7 @@ const Appointment = () => {
   const [formData, setFormData] = useState({
     gender: "",
     name: "",
-    birthdate: "",
+    age: "",
     mobile: "",
     clinic: "",
     doctor: "",
@@ -36,10 +36,10 @@ const Appointment = () => {
     e.preventDefault();
 
     // Format the message (using %0A for line breaks)
-    const message = `حجز موعد:%0Aالجنس: ${formData.gender}%0Aالاسم: ${formData.name}%0Aتاريخ الميلاد: ${formData.birthdate}%0Aرقم الجوال: ${formData.mobile}%0Aالعيادة: ${formData.clinic}%0Aالطبيب: ${formData.doctor}%0Aتاريخ الموعد: ${formData.appointmentDate}%0Aوقت الموعد: ${formData.appointmentTime}`;
+    const message = `حجز موعد:%0Aالجنس: ${formData.gender}%0Aالاسم: ${formData.name}%0Aالعمر: ${formData.age}%0Aرقم الجوال: ${formData.mobile}%0Aالعيادة: ${formData.clinic}%0Aالطبيب: ${formData.doctor}%0Aتاريخ الموعد: ${formData.appointmentDate}`;
 
     // Replace with your static WhatsApp number (include country code without the +)
-    const whatsappNumber = "+966550303411"; // e.g., "15551234567"
+    const whatsappNumber = "+966550303411";
     const url = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${message}`;
 
     // Open WhatsApp in a new tab/window
@@ -48,15 +48,15 @@ const Appointment = () => {
 
   return (
     <section
-      className="relative py-16 text-white font-['Almarai'] rounded-3xl overflow-hidden bg-cover bg-center h-auto flex items-center"
+      className="relative py-10 md:py-16 text-white font-['Almarai'] rounded-3xl overflow-hidden bg-cover bg-center min-h-[80vh] flex items-center"
       id="appointment"
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
-      <div className="container mx-auto px-6 relative z-10 flex flex-col items-center lg:items-end text-right">
+      <div className="container mx-auto px-4 md:px-6 relative z-10 flex flex-col items-center lg:items-end text-right w-full">
         {/* Text Section - Right Aligned */}
-        <div className="w-full lg:w-1/2">
-          <h2 className="text-6xl font-bold">احجز موعدك الآن</h2>
-          <p className="text-lg mt-4 text-[#C9E165]">
+        <div className="w-full lg:w-1/2 text-center lg:text-right">
+          <h2 className="text-3xl md:text-4xl lg:text-6xl font-bold">احجز موعدك الآن</h2>
+          <p className="text-base md:text-lg mt-2 md:mt-4 text-[#C9E165]">
             حدد تفاصيل الموعد واحصل على استشارة مخصصة بسهولة
           </p>
         </div>
@@ -64,14 +64,29 @@ const Appointment = () => {
         {/* Booking Form */}
         <form
           onSubmit={handleSubmit}
-          className="bg-white rounded-3xl shadow-lg flex flex-col gap-4 p-6 w-full max-w-4xl mt-14"
+          className="bg-white rounded-2xl md:rounded-3xl shadow-lg flex flex-col gap-3 md:gap-4 p-4 md:p-6 w-full max-w-4xl mt-8 md:mt-14"
         >
           {/* Patient Details */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+            
+            
 
+            {/* Name */}
+            <div className="flex items-center border border-gray-300 px-3 py-2 rounded-lg w-full">
+              <input
+                type="text"
+                placeholder="الاسم"
+                className="bg-transparent outline-none text-gray-700 w-full text-right text-sm md:text-base"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+              />
+              <FaUser className="text-[#6B297A] ml-1 md:ml-2 text-xl md:text-2xl" />
+            </div>
             {/* Gender */}
-            <div className="flex items-center px-4 py-2 rounded-lg w-full justify-end">
-              <label className="flex items-center ml-4">
+            <div className="flex items-center px-3 py-2 rounded-lg w-full justify-end">
+              <label className="flex items-center ml-2 md:ml-4">
                 <input
                   type="radio"
                   name="gender"
@@ -80,11 +95,11 @@ const Appointment = () => {
                   checked={formData.gender === "أنثى"}
                   onChange={handleChange}
                 />
-                <span className="px-3 py-1 text-[#6B297A] border border-gray-300 rounded-lg cursor-pointer peer-checked:bg-[#6B297A] peer-checked:text-white">
+                <span className="px-2 py-1 text-sm md:text-base text-[#6B297A] border border-gray-300 rounded-lg cursor-pointer peer-checked:bg-[#6B297A] peer-checked:text-white">
                   أنثى
                 </span>
               </label>
-              <label className="flex items-center ml-4">
+              <label className="flex items-center ml-2 md:ml-4">
                 <input
                   type="radio"
                   name="gender"
@@ -93,137 +108,110 @@ const Appointment = () => {
                   checked={formData.gender === "ذكر"}
                   onChange={handleChange}
                 />
-                <span className="px-3 py-1 text-[#6B297A] border border-gray-300 rounded-lg cursor-pointer peer-checked:bg-[#6B297A] peer-checked:text-white">
+                <span className="px-2 py-1 text-sm md:text-base text-[#6B297A] border border-gray-300 rounded-lg cursor-pointer peer-checked:bg-[#6B297A] peer-checked:text-white">
                   ذكر
                 </span>
               </label>
-              <span className="text-gray-700 mx-4">الجنس</span>
-              <FaVenusMars className="text-[#6B297A] ml-2 text-2xl" />
+              <span className="text-gray-700 mx-2 md:mx-4 text-sm md:text-base">الجنس</span>
+              <FaVenusMars className="text-[#6B297A] ml-1 md:ml-2 text-xl md:text-2xl" />
             </div>
-
-
-
-            {/* Name */}
-            <div className="flex items-center border border-gray-300 px-4 py-2 rounded-lg w-full">
-              <input
-                type="text"
-                placeholder="الاسم"
-                className="bg-transparent outline-none text-gray-700 w-full text-right text-sm"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-              />
-              <FaUser className="text-[#6B297A] ml-2 text-2xl" />
-            </div>
-
-
-
-            {/* Birthdate */}
-            {/* Age Input Field */}
-            <div className="flex items-center border border-gray-300 px-4 py-2 rounded-lg w-full">
-              {/* Age Input */}
+            {/* Age */}
+            <div className="flex items-center border border-gray-300 px-3 py-2 rounded-lg w-full">
               <input
                 type="number"
-                className="bg-transparent outline-none text-gray-700 w-full text-right"
+                className="bg-transparent outline-none text-gray-700 w-full text-right text-sm md:text-base"
                 name="age"
                 value={formData.age}
                 onChange={handleChange}
                 placeholder="العمر"
-                min="1" // Prevent negative values
+                min="1"
                 required
               />
-
-              {/* Age Icon */}
-              <FaCalendarAlt className="text-[#6B297A] text-2xl ml-2" />
+              <FaCalendarAlt className="text-[#6B297A] text-xl md:text-2xl ml-1 md:ml-2" />
             </div>
-
-
-
-
 
             {/* Mobile Number */}
-            <div className="flex items-center border border-gray-300 px-4 py-2 rounded-lg w-full">
-              <input
-                type="tel"
-                placeholder="رقم الجوال"
-                className="bg-transparent outline-none text-gray-700 w-full text-right text-sm"
-                name="mobile"
-                value={formData.mobile}
-                onChange={handleChange}
-                required
-              />
-              <FaPhone className="text-[#6B297A] ml-2 text-2xl" />
-
-            </div>
+             
+                  <div className="flex items-center border border-gray-300 px-3 py-2 rounded-lg w-full">
+                    <input
+                      type="tel"
+                      placeholder="رقم الجوال"
+                      className="bg-transparent outline-none text-gray-700 w-full text-right text-sm md:text-base"
+                      name="mobile"
+                      value={formData.mobile}
+                      onChange={(e) => {
+                        // Only allow digits
+                        const value = e.target.value.replace(/\D/g, '');
+                        setFormData((prev) => ({
+                          ...prev,
+                          mobile: value,
+                        }));
+                      }}
+                      pattern="^05\d{8}$"
+                      title="رقم الجوال يجب أن يكون 10 أرقام ويبدأ بـ 05"
+                      maxLength={10}
+                      required
+                    />
+                    <FaPhone className="text-[#6B297A] ml-1 md:ml-2 text-xl md:text-2xl" />
+                  </div>
           </div>
 
           {/* Appointment Details */}
-          <div className="grid grid-cols-2 gap-4">
-            {/* Right Column */}
-            <div>
-              {/* Doctor Selection */}
-              <div className="flex items-center border border-gray-300 px-4 py-2 rounded-lg w-full flex-row-reverse">
-              <FaUserMd className="text-[#6B297A] ml-2 text-2xl" />
-
-                <select
-                  className="bg-transparent outline-none text-gray-700 w-full text-right text-sm"
-                  name="doctor"
-                  value={formData.doctor}
-                  onChange={handleChange}
-                  required
-                  dir="rtl"
-                >
-                  <option value="">الطبيب</option>
-                  <option value="د. محمد">د. محمد</option>
-                  <option value="د. علي">د. علي</option>
-                </select>
-              </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+            {/* Clinic Selection */}
+            <div className="flex items-center border border-gray-300 px-3 py-2 rounded-lg w-full flex-row-reverse">
+              <FaClinicMedical className="text-[#6B297A] ml-1 md:ml-2 text-xl md:text-2xl" />
+              <select
+                className="bg-transparent outline-none text-gray-700 w-full text-right text-sm md:text-base"
+                name="clinic"
+                value={formData.clinic}
+                onChange={handleChange}
+                required
+                dir="rtl"
+              >
+                <option value="">العيادة</option>
+                <option value="العيادة 1">العيادة 1</option>
+                <option value="العيادة 2">العيادة 2</option>
+              </select>
             </div>
 
-            {/* Left Column */}
-            <div className="space-y-4">
-              {/* Clinic Selection */}
-              <div className="flex items-center border border-gray-300 px-4 py-2 rounded-lg w-full flex-row-reverse mb-4">
-              <FaClinicMedical className="text-[#6B297A] ml-2 text-2xl" />
+            {/* Doctor Selection */}
+            <div className="flex items-center border border-gray-300 px-3 py-2 rounded-lg w-full flex-row-reverse">
+              <FaUserMd className="text-[#6B297A] ml-1 md:ml-2 text-xl md:text-2xl" />
+              <select
+                className="bg-transparent outline-none text-gray-700 w-full text-right text-sm md:text-base"
+                name="doctor"
+                value={formData.doctor}
+                onChange={handleChange}
+                required
+                dir="rtl"
+              >
+                <option value="">الطبيب</option>
+                <option value="د. محمد">د. محمد</option>
+                <option value="د. علي">د. علي</option>
+              </select>
+            </div>
 
-                <select
-                  className="bg-transparent outline-none text-gray-700 w-full text-right text-sm"
-                  name="clinic"
-                  value={formData.clinic}
-                  onChange={handleChange}
-                  required
-                  dir="rtl"
-                >
-                  <option value="">العيادة</option>
-                  <option value="العيادة 1">العيادة 1</option>
-                  <option value="العيادة 2">العيادة 2</option>
-                </select>
-              </div>
-              
-
-              {/* Appointment Date */}
-              <div className="flex items-center border border-gray-300 px-4 py-2 rounded-lg w-full flex-row-reverse">
-              <FaCalendarAlt className="text-[#6B297A] text-2xl ml-2" />
-
-                <input
-                  type="date"
-                  id="appointmentDate"
-                  className="bg-transparent outline-none text-gray-700 w-full text-right cursor-pointer appearance-none [&::-webkit-calendar-picker-indicator]:hidden"
-                  name="appointmentDate"
-                  value={formData.appointmentDate}
-                  onChange={handleChange}
-                  required
-                  onClick={(e) => e.target.showPicker()}
-                />
-              </div>
+            {/* Appointment Date */}
+            <div className="flex items-center border border-gray-300 px-3 py-2 rounded-lg w-full flex-row-reverse md:col-span-2">
+              <FaCalendarAlt className="text-[#6B297A] text-xl md:text-2xl ml-1 md:ml-2" />
+              <input
+                type="date"
+                id="appointmentDate"
+                className="bg-transparent outline-none text-gray-700 w-full text-right cursor-pointer appearance-none [&::-webkit-calendar-picker-indicator]:opacity-100 text-sm md:text-base"
+                name="appointmentDate"
+                value={formData.appointmentDate}
+                onChange={handleChange}
+                min={new Date().toISOString().split('T')[0]}
+                required
+              />
             </div>
           </div>
 
           {/* Submit Button */}
           <button
             type="submit"
-            className="flex items-center justify-center bg-[#6B297A] text-white px-6 py-3 rounded-full hover:bg-[#C9E165] hover:text-[#6B297A] transition-all duration-300 w-full md:w-auto mt-4"
+            className="flex items-center justify-center bg-[#6B297A] text-white px-4 md:px-6 py-2 md:py-3 rounded-full hover:bg-[#C9E165] hover:text-[#6B297A] transition-all duration-300 w-full mt-2 md:mt-4 text-sm md:text-base"
           >
             <span>احجز الآن</span>
           </button>
