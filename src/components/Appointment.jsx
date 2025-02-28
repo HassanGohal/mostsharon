@@ -48,20 +48,14 @@ const Appointment = () => {
 
   return (
     <section
-      className="relative py-10 md:py-16 text-white font-['Almarai'] rounded-3xl overflow-hidden bg-cover bg-center min-h-[80vh] flex items-center"
+      className="relative py-10 md:py-16 text-white font-['Almarai'] rounded-3xl overflow-hidden min-h-[80vh] flex items-center justify-center bg-[#6B297A]"
       id="appointment"
-      style={{
-        backgroundImage: `url(${backgroundImage})`,
-      }}
     >
-      {/* Background Overlay (Hidden on Mobile) */}
-      <div className="absolute inset-0 bg-cover bg-center md:block hidden" style={{ backgroundImage: `url(${backgroundImage})` }}></div>
-
-      <div className="container mx-auto px-4 md:px-6 relative z-10 flex flex-col items-center lg:items-end text-right w-full">
+      <div className="container mx-auto px-4 md:px-6 relative z-10 flex flex-col items-center text-center w-full">
         {/* Text Section - Right Aligned */}
         <div className="w-full lg:w-1/2 text-center lg:text-right">
-          <h2 className="text-3xl md:text-4xl lg:text-6xl font-bold">احجز موعدك الآن</h2>
-          <p className="text-base md:text-lg mt-2 md:mt-4 text-[#C9E165]">
+          <h2 className="text-3xl md:text-4xl lg:text-6xl font-bold text-center">احجز موعدك الآن</h2>
+          <p className="text-base md:text-lg mt-2 md:mt-4 text-[#C9E165] text-center">
             حدد تفاصيل الموعد واحصل على استشارة مخصصة بسهولة
           </p>
         </div>
