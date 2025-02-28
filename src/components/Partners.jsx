@@ -29,7 +29,7 @@ const Partners = () => {
         </div>
 
         {/* Logo Carousel with Infinite Scroll */}
-        <div className="relative flex items-center justify-center">
+        <div className="relative flex items-center justify-center h-40">
           {/* Left & Right Gradient Transparency */}
           <div className="absolute inset-y-0 left-0 w-[10%] md:w-[15%] bg-gradient-to-r from-white to-transparent pointer-events-none"></div>
           <div className="absolute inset-y-0 right-0 w-[10%] md:w-[15%] bg-gradient-to-l from-white to-transparent pointer-events-none"></div>
@@ -40,7 +40,7 @@ const Partners = () => {
               {/* Duplicate logos for seamless infinite effect */}
               {[...partners, ...partners].map((partner, index) => (
                 <div key={index} className="bg-white p-4 sm:p-6 border-2 border-transparent flex justify-center items-center rounded-[2rem]">
-                  <img src={partner.image} alt={partner.name} className="h-16 sm:h-24 w-auto object-contain" />
+                  <img src={partner.image} alt={partner.name} className="h-20 sm:h-24 w-auto object-contain" />
                 </div>
               ))}
             </div>

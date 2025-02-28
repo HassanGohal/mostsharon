@@ -50,8 +50,13 @@ const Appointment = () => {
     <section
       className="relative py-10 md:py-16 text-white font-['Almarai'] rounded-3xl overflow-hidden bg-cover bg-center min-h-[80vh] flex items-center"
       id="appointment"
-      style={{ backgroundImage: `url(${backgroundImage})` }}
+      style={{
+        backgroundImage: `url(${backgroundImage})`,
+      }}
     >
+      {/* Background Overlay (Hidden on Mobile) */}
+      <div className="absolute inset-0 bg-cover bg-center md:block hidden" style={{ backgroundImage: `url(${backgroundImage})` }}></div>
+
       <div className="container mx-auto px-4 md:px-6 relative z-10 flex flex-col items-center lg:items-end text-right w-full">
         {/* Text Section - Right Aligned */}
         <div className="w-full lg:w-1/2 text-center lg:text-right">
@@ -68,8 +73,8 @@ const Appointment = () => {
         >
           {/* Patient Details */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
-            
-            
+
+
 
             {/* Name */}
             <div className="flex items-center border border-gray-300 px-3 py-2 rounded-lg w-full">
@@ -131,29 +136,29 @@ const Appointment = () => {
             </div>
 
             {/* Mobile Number */}
-             
-                  <div className="flex items-center border border-gray-300 px-3 py-2 rounded-lg w-full">
-                    <input
-                      type="tel"
-                      placeholder="رقم الجوال"
-                      className="bg-transparent outline-none text-gray-700 w-full text-right text-sm md:text-base"
-                      name="mobile"
-                      value={formData.mobile}
-                      onChange={(e) => {
-                        // Only allow digits
-                        const value = e.target.value.replace(/\D/g, '');
-                        setFormData((prev) => ({
-                          ...prev,
-                          mobile: value,
-                        }));
-                      }}
-                      pattern="^05\d{8}$"
-                      title="رقم الجوال يجب أن يكون 10 أرقام ويبدأ بـ 05"
-                      maxLength={10}
-                      required
-                    />
-                    <FaPhone className="text-[#6B297A] ml-1 md:ml-2 text-xl md:text-2xl" />
-                  </div>
+
+            <div className="flex items-center border border-gray-300 px-3 py-2 rounded-lg w-full">
+              <input
+                type="tel"
+                placeholder="رقم الجوال"
+                className="bg-transparent outline-none text-gray-700 w-full text-right text-sm md:text-base"
+                name="mobile"
+                value={formData.mobile}
+                onChange={(e) => {
+                  // Only allow digits
+                  const value = e.target.value.replace(/\D/g, '');
+                  setFormData((prev) => ({
+                    ...prev,
+                    mobile: value,
+                  }));
+                }}
+                pattern="^05\d{8}$"
+                title="رقم الجوال يجب أن يكون 10 أرقام ويبدأ بـ 05"
+                maxLength={10}
+                required
+              />
+              <FaPhone className="text-[#6B297A] ml-1 md:ml-2 text-xl md:text-2xl" />
+            </div>
           </div>
 
           {/* Appointment Details */}

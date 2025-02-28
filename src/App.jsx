@@ -54,6 +54,7 @@ const App = () => {
         {/* hide temprery */}
         {/* <Insurance /> */}
         <div data-aos="fade-up">
+        <div className="w-full h-[2px] bg-[#6B297A]/10 my-12"></div>
           <Partners />
         </div>
         <div data-aos="fade-up">
