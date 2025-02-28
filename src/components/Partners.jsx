@@ -1,12 +1,12 @@
 import React from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
-import "swiper/css";
+
+// Import partner logos
 import bupa from "../assets/Bupa.png";
 import tawuniya from "../assets/Tawuniya-01.png";
 import medgulf from "../assets/Medgulf.png";
 import rajhi from "../assets/Al-Rajhi-Takaful.png";
 
+// Define partners' logos
 const partners = [
   { id: 1, name: "بوبا العربية", image: bupa },
   { id: 2, name: "التعاونية", image: tawuniya },
@@ -18,7 +18,7 @@ const partners = [
 
 const Partners = () => {
   return (
-    <section className="py-16 bg-white font-['Almarai'] text-center relative overflow-hidden" id="partners">
+    <section className="py-20 bg-white font-['Almarai'] text-center overflow-hidden relative" id="partners">
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <div className="mb-12">
@@ -28,34 +28,45 @@ const Partners = () => {
           </p>
         </div>
 
-        {/* Swiper Carousel */}
-        <div className="relative w-full">
-          {/* Left & Right Gradients */}
-          <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-white to-transparent pointer-events-none"></div>
-          <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-white to-transparent pointer-events-none"></div>
+        {/* Logo Carousel with Infinite Scroll */}
+        <div className="relative flex items-center justify-center">
+          {/* Left & Right Gradient Transparency */}
+          <div className="absolute inset-y-0 left-0 w-[10%] md:w-[15%] bg-gradient-to-r from-white to-transparent pointer-events-none"></div>
+          <div className="absolute inset-y-0 right-0 w-[10%] md:w-[15%] bg-gradient-to-l from-white to-transparent pointer-events-none"></div>
 
-          <Swiper
-            slidesPerView={4} // Show 2 items by default
-            spaceBetween={20} 
-            loop={true}
-            autoplay={{  }}
-            breakpoints={{
-              640: { slidesPerView: 3 },
-              1024: { slidesPerView: 4 },
-            }}
-            modules={[Autoplay]}
-             speed={1200}
-            className="relative"
-          >
-            {partners.map((partner) => (
-              <SwiperSlide key={partner.id} className="flex justify-center items-center">
-                <div className="bg-white rounded-[2rem] p-6 border-2 border-transparent  transform transition-all duration-300 flex justify-center items-center">
-                  <img src={partner.image} alt={partner.name} className="h-32 w-auto object-contain" />
+          {/* Infinite Scrolling Container */}
+          <div className="w-full overflow-hidden">
+            <div className="flex items-center space-x-8 animate-scroll">
+              {/* Duplicate logos for seamless infinite effect */}
+              {[...partners, ...partners].map((partner, index) => (
+                <div key={index} className="bg-white p-4 sm:p-6 border-2 border-transparent flex justify-center items-center rounded-[2rem]">
+                  <img src={partner.image} alt={partner.name} className="h-16 sm:h-24 w-auto object-contain" />
                 </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+              ))}
+            </div>
+          </div>
         </div>
+
+        {/* Custom CSS for Infinite Scrolling */}
+        <style>
+          {`
+            @keyframes scroll {
+              from {
+                transform: translateX(0);
+              }
+              to {
+                transform: translateX(-50%);
+              }
+            }
+            
+            .animate-scroll {
+              display: flex;
+              flex-wrap: nowrap;
+              width: max-content;
+              animation: scroll 15s linear infinite;
+            }
+          `}
+        </style>
       </div>
     </section>
   );
