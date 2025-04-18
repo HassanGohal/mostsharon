@@ -26,38 +26,38 @@ const App = () => {
   }, []);
 
   return (
-    <div className="font-sans">
+    <div className="font-sans" dir="rtl">
       <Navbar />
-      <Hero data-aos="fade-down" />
+      <Hero  />
       <ScrollToTop />
 
       {/* Wrap Content Inside MainContainer */}
       <MainContainer>
-        <div data-aos="fade-up">
+        <div >
           <About />
         </div>
-        <div data-aos="fade-up">
+        <div >
           <Stats />
         </div>
-        <div data-aos="fade-up">
+        <div >
           <Service />
         </div>
         <div className="w-full h-[2px] bg-[#6B297A]/10 my-12"></div>
-        <div data-aos="fade-up">
+        <div >
           <Gallery />
         </div>
         <div className="w-full h-[2px] bg-[#6B297A]/10 my-12"></div>
-        <div data-aos="fade-up">
+        <div >
           <Team />
         </div>
         <div className="w-full h-[2px] bg-[#6B297A]/0 my-12"></div>
         {/* hide temprery */}
         {/* <Insurance /> */}
-        <div data-aos="fade-up">
+        <div >
         <div className="w-full h-[2px] bg-[#6B297A]/10 my-12"></div>
           <Partners />
         </div>
-        <div data-aos="fade-up">
+        <div >
           <Appointment />
         </div>
       </MainContainer>

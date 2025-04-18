@@ -48,16 +48,35 @@ const Appointment = () => {
 
   return (
     <section
-      className="relative py-10 md:py-16 text-white font-['Almarai'] rounded-3xl overflow-hidden min-h-[80vh] flex items-center justify-center bg-[#6B297A]"
+      className="relative py-8 md:py-16 text-white font-['Almarai'] rounded-3xl overflow-hidden h-auto md:min-h-[80vh] flex flex-col md:flex-row items-start md:items-center justify-start md:justify-center bg-[#6B297A] mt-20 md:mt-24"
       id="appointment"
     >
       <div className="container mx-auto px-4 md:px-6 relative z-10 flex flex-col items-center text-center w-full">
         {/* Text Section - Right Aligned */}
         <div className="w-full lg:w-1/2 text-center lg:text-right">
           <h2 className="text-3xl md:text-4xl lg:text-6xl font-bold text-center">احجز موعدك الآن</h2>
-          <p className="text-base md:text-lg mt-2 md:mt-4 text-[#C9E165] text-center">
+          <p className="text-base md:text-lg mt-2 md:mt-4 text-[#C9E165] text-center mb-8">
             حدد تفاصيل الموعد واحصل على استشارة مخصصة بسهولة
           </p>
+          
+          <div className="bg-[#5B2268] p-6 rounded-2xl shadow-lg mx-auto mb-8 w-full max-w-4xl" dir="rtl">
+            <h3 className="text-xl font-bold mb-6 text-[#C9E165] text-center">أوقات العمل</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+              <div className="py-2">
+                <p className="font-bold mb-2">الأحد - الخميس</p>
+                <p className="text-[#C9E165]">2 مساءً - 10 مساءً</p>
+              </div>
+              <div className="border-y md:border-y-0 md:border-x border-[#C9E165]/20 py-4 md:py-2">
+                <p className="font-bold mb-2">السبت</p>
+                <p className="text-[#C9E165]">2 مساءً - 8 مساءً</p>
+              </div>
+              <div className="py-2">
+                <p className="font-bold mb-2">الجمعة</p>
+                <p className="text-red-300">مغلق</p>
+              </div>
+            </div>
+          </div>
+
         </div>
 
         {/* Booking Form */}
@@ -192,17 +211,23 @@ const Appointment = () => {
             </div>
 
             {/* Appointment Date */}
-            <div className="flex items-center border border-gray-300 px-3 py-2 rounded-lg w-full flex-row-reverse md:col-span-2">
-              <FaCalendarAlt className="text-[#6B297A] text-xl md:text-2xl ml-1 md:ml-2" />
+            <div className="relative w-full md:col-span-2">
+              <div className="absolute inset-y-0 end-0 flex items-center pe-3.5 pointer-events-none">
+                <svg className="w-5 h-5 text-[#6B297A]" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+                </svg>
+              </div>
               <input
                 type="date"
                 id="appointmentDate"
-                className="bg-transparent outline-none text-gray-700 w-full text-right cursor-pointer appearance-none [&::-webkit-calendar-picker-indicator]:opacity-100 text-sm md:text-base"
+                className="bg-transparent border border-gray-300 text-gray-700 text-sm rounded-lg focus:ring-[#6B297A] focus:border-[#6B297A] block w-full pe-10 p-2.5 text-right"
                 name="appointmentDate"
                 value={formData.appointmentDate}
                 onChange={handleChange}
                 min={new Date().toISOString().split('T')[0]}
                 required
+                dir="rtl"
+                placeholder="اختر التاريخ"
               />
             </div>
           </div>

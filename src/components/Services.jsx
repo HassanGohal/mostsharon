@@ -105,25 +105,25 @@ const Services = () => {
                     {services.map((service) => (
                         <div
                             key={service.id}
-                            className="group bg-white p-8 rounded-3xl shadow-md border border-gray-200 transition-all duration-300 flex flex-col items-end text-center hover:shadow-xl"
+                            className="group bg-white p-8 rounded-3xl shadow-md border border-gray-200 transition-all duration-300 flex flex-col hover:shadow-xl"
                         >
                             {/* أيقونة وعنوان الخدمة */}
-                            <div className="flex flex-row-reverse items-center gap-4 mb-4">
+                            <div className="flex items-center gap-4 mb-4 w-full">
+
                                 <div className={`${service.bgColor} p-3 rounded-xl`}>
                                     {service.icon}
                                 </div>
-                                <h3 className={`text-[16px] font-bold items-center  ${service.textColor}`}>
+                                <h3 className={`text-[16px] font-bold text-right flex-grow ${service.textColor}`}>
                                     {service.title}
                                 </h3>
-
                             </div>
 
                             {/* تفاصيل الخدمة */}
-                            <ul className="list-none space-y-2 text-gray-700 text-right lg:pr-16 sm:pr-4">
+                            <ul className="list-none space-y-2 text-gray-700 text-right pr-0">
                                 {service.description.map((point, idx) => (
-                                    <li key={idx} className="flex items-center gap-2 justify-end">
+                                    <li key={idx} className="flex items-center gap-2 justify-start">
+                                        <span className="text-green-600 sm:text-green-600">✔</span>
                                         <span>{point}</span>
-                                        <span className="text-green-600 sm:text-green-600">✔</span> {/* Ensures green remains on mobile */}
                                     </li>
                                 ))}
                             </ul>

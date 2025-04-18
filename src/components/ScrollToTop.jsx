@@ -23,7 +23,7 @@ const ScrollToTop = () => {
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth',
+      behavior: 'smooth'
     });
   };
 
@@ -33,7 +33,7 @@ const ScrollToTop = () => {
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({
-        behavior: 'smooth',
+        behavior: 'smooth'
       });
     }
   };

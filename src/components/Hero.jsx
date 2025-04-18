@@ -13,7 +13,7 @@ const Hero = () => {
     <header
       className="relative flex items-center justify-center text-white bg-center bg-cover bg-local h-[100vh] font-['Almarai']"
       style={{ backgroundImage: `url(${headerImage})` }} // Use imported image
-      id="header"
+      id="hero"
     >
 
       <div className="relative text-center px-6 z-10 top-20">
