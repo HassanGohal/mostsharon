@@ -56,25 +56,27 @@ const ScrollToTop = () => {
   return (
     <>
       {/* Fixed Bottom Navigation Bar */}
-      <div className="fixed bottom-6 w-full flex justify-between items-center px-6 z-50">
-        {/* Booking Button (Left Side) - only visible on mobile */}
-        {isMobile && isVisible && (
-          <button 
-            className="bg-[#6B297A] text-white px-4 py-2 rounded-full hover:bg-[#C9E165] hover:text-[#6B297A] transition-all duration-300 font-['Almarai'] text-sm shadow-lg"
-            onClick={(e) => handleClick(e, 'appointment')}
-          >
-            احجز موعدك
-          </button>
-        )}
-        {/* Scroll to Top Button (Right Side) - visible on all devices */}
-        {isVisible && (
+      <div className="fixed bottom-6 w-full flex justify-between items-center px-6 z-50 pointer-events-none">
+        {/* Scroll to Top Button (Left Side) - always visible */}
+        <div className="pointer-events-auto">
           <div
             onClick={scrollToTop}
-            className="cursor-pointer bg-[#C9E165] hover:bg-[#8b3a9e] text-white p-3 rounded-full shadow-lg transition-all duration-300 ml-auto"
+            className="cursor-pointer bg-[#C9E165] hover:bg-[#8b3a9e] text-white p-3 rounded-full shadow-lg transition-all duration-300"
           >
             <IoIosArrowUp size={20} />
           </div>
-        )}
+        </div>
+        {/* Booking Button (Right Side) - always visible on mobile */}
+        <div className="pointer-events-auto">
+          {isMobile && (
+            <button 
+              className="bg-[#6B297A] text-white px-4 py-2 rounded-full hover:bg-[#C9E165] hover:text-[#6B297A] transition-all duration-300 font-['Almarai'] text-sm shadow-lg"
+              onClick={(e) => handleClick(e, 'appointment')}
+            >
+              احجز موعدك
+            </button>
+          )}
+        </div>
       </div>
       
       {/* Bottom Divider - only on mobile */}
