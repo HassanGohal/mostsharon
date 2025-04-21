@@ -70,7 +70,7 @@ const Gallery = () => {
                     {/* Slider controls */}
                     <button
                         type="button"
-                        className="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none hover:-translate-x-1 transition-transform duration-300"
+                        className="absolute top-0 start-0 z-30 hidden sm:flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none hover:-translate-x-1 transition-transform duration-300"
                         onClick={prevSlide}
                     >
                         <span 
@@ -84,7 +84,7 @@ const Gallery = () => {
                     </button>
                     <button
                         type="button"
-                        className="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none hover:translate-x-1 transition-transform duration-300"
+                        className="absolute top-0 end-0 z-30 hidden sm:flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none hover:translate-x-1 transition-transform duration-300"
                         onClick={nextSlide}
                     >
                         <span 

@@ -1,73 +1,74 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-// Import partner logos
-import bupa from "../assets/Bupa.png";
-import tawuniya from "../assets/Tawuniya-01.png";
-import medgulf from "../assets/Medgulf.png";
-import rajhi from "../assets/Al-Rajhi-Takaful.png";
-
-// Define partners' logos
-const partners = [
-  { id: 1, name: "بوبا العربية", image: bupa },
-  { id: 2, name: "التعاونية", image: tawuniya },
-  { id: 3, name: "ميدغلف", image: medgulf },
-  { id: 4, name: "تكافل الراجحي", image: rajhi },
-  { id: 5, name: "بوبا العربية", image: bupa },
-  { id: 6, name: "التعاونية", image: tawuniya },
-];
+// Import all partner logos dynamically
+const partnerImages = import.meta.glob('../assets/partners/*');
 
 const Partners = () => {
+  const [partners, setPartners] = useState([]);
+
+  useEffect(() => {
+    // Load all partner images
+    Promise.all(
+      Object.entries(partnerImages).map(async ([path, loader]) => {
+        const image = await loader();
+        return {
+          id: path,
+          name: path.split('/').pop().split('.')[0],
+          image: image.default
+        };
+      })
+    ).then(loadedPartners => {
+      setPartners(loadedPartners);
+    });
+  }, []);
+
   return (
-    <section className="py-20 bg-white font-['Almarai'] text-center overflow-hidden relative" id="partners">
-      <div className="container mx-auto px-4">
-        {/* Section Header */}
-        <div className="mb-12">
-          <h2 className="text-4xl font-bold text-[#6B297A]">شركاؤنا</h2>
-          <p className="text-lg mt-4 max-w-2xl mx-auto text-gray-600">
-            نفخر بشراكتنا مع مجموعة من الشركات الرائدة في تقديم أفضل الخدمات
-          </p>
+    <section className="bg-white py-8 font-['Almarai']" id="partners">
+      <h2 className="text-center text-4xl mb-2 font-bold text-[#6B297A]">شركاؤنا</h2>
+      <p className="text-center text-lg font-light text-gray-600 mb-8">
+        نفخر بشراكتنا مع مجموعة من الشركات الرائدة في تقديم أفضل الخدمات
+      </p>
+      
+      <div className="group relative overflow-hidden whitespace-nowrap py-10 [mask-image:_linear-gradient(to_right,_transparent_0,_white_128px,white_calc(100%-128px),_transparent_100%)]">
+        <div className="animate-slide-left-infinite group-hover:[animation-play-state:paused] inline-block w-max">
+          {partners.map((partner) => (
+            <img
+              key={partner.id}
+              src={partner.image}
+              alt={partner.name}
+              className="mx-4 inline h-16 hover:scale-110 transition-transform duration-300"
+              loading="lazy"
+            />
+          ))}
         </div>
 
-        {/* Logo Carousel with Infinite Scroll */}
-        <div className="relative flex items-center justify-center h-40">
-          {/* Left & Right Gradient Transparency */}
-          <div className="absolute inset-y-0 left-0 w-[10%] md:w-[15%] bg-gradient-to-r from-white to-transparent pointer-events-none"></div>
-          <div className="absolute inset-y-0 right-0 w-[10%] md:w-[15%] bg-gradient-to-l from-white to-transparent pointer-events-none"></div>
-
-          {/* Infinite Scrolling Container */}
-          <div className="w-full overflow-hidden">
-            <div className="flex items-center space-x-8 animate-scroll">
-              {/* Duplicate logos for seamless infinite effect */}
-              {[...partners, ...partners].map((partner, index) => (
-                <div key={index} className="bg-white p-4 sm:p-6 border-2 border-transparent flex justify-center items-center rounded-[2rem]">
-                  <img src={partner.image} alt={partner.name} className="h-20 sm:h-24 w-auto object-contain" />
-                </div>
-              ))}
-            </div>
-          </div>
+        {/* Duplicate for infinite effect */}
+        <div className="animate-slide-left-infinite group-hover:[animation-play-state:paused] inline-block w-max">
+          {partners.map((partner) => (
+            <img
+              key={`${partner.id}-dup`}
+              src={partner.image}
+              alt={partner.name}
+              className="mx-4 inline h-16 hover:scale-110 transition-transform duration-300"
+              loading="lazy"
+            />
+          ))}
         </div>
-
-        {/* Custom CSS for Infinite Scrolling */}
-        <style>
-          {`
-            @keyframes scroll {
-              from {
-                transform: translateX(0);
-              }
-              to {
-                transform: translateX(-50%);
-              }
-            }
-            
-            .animate-scroll {
-              display: flex;
-              flex-wrap: nowrap;
-              width: max-content;
-              animation: scroll 15s linear infinite;
-            }
-          `}
-        </style>
       </div>
+
+      {/* Tailwind Animations */}
+      <style>
+        {`
+          @keyframes slide-left {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+          }
+
+          .animate-slide-left-infinite {
+            animation: slide-left 30s linear infinite;
+          }
+        `}
+      </style>
     </section>
   );
 };
