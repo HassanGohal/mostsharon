@@ -3,7 +3,14 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
-import team1 from "../assets/team-osama.jpg";
+
+// Import team images
+import teamAhmad from "../assets/team/team-ahmad.png";
+import teamAmjad from "../assets/team/team-amjad.png";
+import teamManar from "../assets/team/team-manar.png";
+import teamMonera from "../assets/team/team-monera.png";
+import teamOsama from "../assets/team/team-osama.png";
+import teamSharaf from "../assets/team/team-sharaf.png";
 
 const Team = () => {
   return (
@@ -27,10 +34,21 @@ const Team = () => {
             modules={[Navigation, Autoplay]}
             className="w-full relative"
           >
-            {[...Array(5)].map((_, index) => (
+            {[
+              { img: teamAhmad },
+              { img: teamAmjad },
+              { img: teamManar },
+              { img: teamMonera },
+              { img: teamOsama },
+              { img: teamSharaf },
+            ].map((member, index) => (
               <SwiperSlide key={index}>
-                <div className="flex w-full justify-center overflow-hidden">
-                  <img src={team1} alt="Team Member" className="justify-center object-cover" />
+                <div className="flex w-full flex-col items-center justify-center overflow-hidden">
+                  <img 
+                    src={member.img} 
+                    alt="Team Member"
+                    className="w-full max-w-2xl h-auto object-contain rounded-lg"
+                  />
                 </div>
               </SwiperSlide>
             ))}
