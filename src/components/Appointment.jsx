@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import {
   FaCalendarAlt,
-  FaUserMd,
-  FaClinicMedical,
   FaPhone,
   FaVenusMars,
   FaUser,
+  FaHospital,
+  FaUserMd,
 } from "react-icons/fa";
 
 // Toast component for confirmation
@@ -26,12 +26,62 @@ const initialForm = {
   appointmentDate: "",
 };
 
-const clinics = [
-  { value: "العيادة 1", label: "العيادة 1", doctors: ["د. محمد", "د. علي"] },
-  { value: "العيادة 2", label: "العيادة 2", doctors: ["د. أحمد", "د. فاطمة"] },
+const clinicData = [
+  {
+    name: 'عيادة قياس وتشخيص اضطرابات الطفولة',
+    staff: [
+      { name: 'د. تهاني الجديعي', title: 'دكتورة', id: 'tahani' }
+    ]
+  },
+  {
+    name: 'عيادات التأهيل والعلاج النفسي السلوكي',
+    staff: [
+      { name: 'أ. منيرة القحطاني', title: 'أخصائية', id: 'monera' },
+      { name: 'أ. أسامة قحل', title: 'أخصائي', id: 'osama' }
+    ]
+  },
+  {
+    name: 'عيادات الاضطرابات النمائية وتعديل السلوك',
+    staff: [
+      { name: 'أ. أمجاد عبدالله', title: 'أخصائية', id: 'amjad' }
+    ]
+  },
+  {
+    name: 'عيادات اضطرابات النطق والكلام',
+    staff: [
+      { name: 'أ. شرف الدين محمود', title: 'أخصائي', id: 'sharaf' },
+      { name: 'أ. منار القحطاني', title: 'أخصائية', id: 'manar' }
+    ]
+  },
+  {
+    name: 'عيادات العلاج الطبيعي',
+    staff: [
+      { name: 'أ. أحمد فكري', title: 'دكتور', id: 'ahmad' }
+    ]
+  },
+  {
+    name: 'عيادات العلاج الوظيفي',
+    staff: []
+  }
 ];
 
+// Convert clinic data to format needed for form
+const clinics = clinicData.map(clinic => ({
+  value: clinic.name,
+  label: clinic.name,
+  doctors: clinic.staff.map(person => person.name)
+}));
+
+const doctors = clinicData.flatMap(clinic => 
+  clinic.staff.map(person => ({
+    id: person.id,
+    name: person.name,
+    specialties: [clinic.name]
+  }))
+);
+
 const Appointment = () => {
+  const [showClinics, setShowClinics] = useState(true);
   const [formData, setFormData] = useState(initialForm);
   const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
@@ -58,7 +108,6 @@ const Appointment = () => {
     if (!formData.name.trim()) errs.name = "الاسم مطلوب";
     if (!formData.gender) errs.gender = "يرجى اختيار الجنس";
     if (!formData.age || +formData.age < 1) errs.age = "العمر غير صحيح";
-    if (!/^05\d{8}$/.test(formData.mobile)) errs.mobile = "رقم الجوال يجب أن يكون 10 أرقام ويبدأ بـ 05";
     if (!formData.clinic) errs.clinic = "يرجى اختيار العيادة";
     if (!formData.doctor) errs.doctor = "يرجى اختيار الطبيب";
     if (!formData.appointmentDate) errs.appointmentDate = "يرجى اختيار التاريخ";
@@ -148,18 +197,27 @@ const Appointment = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
             {/* Name */}
             <div className="flex flex-col w-full">
-              <div className="flex items-center border border-gray-300 px-3 py-2 rounded-lg">
-<FaUser className="text-[#6B297A] ml-1 md:ml-2 text-xl md:text-2xl" />
-<input
+              <div className="flex items-center rounded-lg overflow-hidden hover:border-[#6B297A] transition-colors duration-200 group focus-within:border-[#6B297A] border border-gray-300">
+                <div className="px-3 py-2.5 bg-gray-50 border-l border-gray-300 group-hover:border-[#6B297A] group-focus-within:border-[#6B297A] transition-colors duration-200">
+                  <FaUser className="text-[#6B297A] w-5 h-5 group-hover:scale-110 group-focus-within:scale-110 transition-transform duration-200" />
+                </div>
+                <input
                   type="text"
                   placeholder="الاسم"
-                  className="bg-transparent outline-none text-gray-700 w-full text-right text-sm md:text-base"
+                  className="bg-gray-50 text-gray-900 text-sm focus:ring-0 focus:outline-none block w-full p-2.5 text-right placeholder-gray-900"
                   name="name"
                   value={formData.name}
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (value === '' || /^[\u0600-\u06FF\s]*[a-zA-Z\s]*$/.test(value)) {
+                      handleChange(e);
+                    }
+                  }}
+                  pattern="[\u0600-\u06FFa-zA-Z\s]+"
                   aria-label="الاسم"
                   aria-describedby={errors.name ? "name-error" : undefined}
                   required
+                  dir="rtl"
                   autoFocus
                 />
               </div>
@@ -169,55 +227,53 @@ const Appointment = () => {
             </div>
             {/* Gender */}
             <div className="flex flex-col w-full">
-              <div className="flex items-center px-3 py-2 rounded-lg w-full justify-start">
-              <span className="text-gray-700 mx-2 md:mx-4 text-sm md:text-base">الجنس</span>
-              <FaVenusMars className="text-[#6B297A] ml-1 md:ml-2 text-xl md:text-2xl" />
-                <label className="flex items-center ml-2 md:ml-4">
-                  <input
-                    type="radio"
-                    name="gender"
-                    value="أنثى"
-                    className="hidden peer"
-                    checked={formData.gender === "أنثى"}
-                    onChange={handleChange}
-                  />
-                  <span className="px-2 py-1 text-sm md:text-base text-[#6B297A] border border-gray-300 rounded-lg cursor-pointer peer-checked:bg-[#6B297A] peer-checked:text-white">
-                    أنثى
-                  </span>
-                </label>
-                <label className="flex items-center ml-2 md:ml-4">
-                  <input
-                    type="radio"
-                    name="gender"
-                    value="ذكر"
-                    className="hidden peer"
-                    checked={formData.gender === "ذكر"}
-                    onChange={handleChange}
-                  />
-                  <span className="px-2 py-1 text-sm md:text-base text-[#6B297A] border border-gray-300 rounded-lg cursor-pointer peer-checked:bg-[#6B297A] peer-checked:text-white">
-                    ذكر
-                  </span>
-                </label>
+              <div className="flex items-center rounded-lg overflow-hidden hover:border-[#6B297A] transition-colors duration-200 group focus-within:border-[#6B297A] border border-gray-300">
+                <div className="px-3 py-2.5 bg-gray-50 border-l border-gray-300 group-hover:border-[#6B297A] group-focus-within:border-[#6B297A] transition-colors duration-200">
+                  <FaVenusMars className="text-[#6B297A] w-5 h-5 group-hover:scale-110 group-focus-within:scale-110 transition-transform duration-200" />
+                </div>
+                <select
+                  name="gender"
+                  className="bg-gray-50 text-gray-900 text-sm focus:ring-0 focus:outline-none block w-full p-2.5 text-right appearance-none placeholder-gray-500"
+                  value={formData.gender}
+                  onChange={handleChange}
+                  aria-label="الجنس"
+                  aria-describedby={errors.gender ? "gender-error" : undefined}
+                  required
+                  dir="rtl"
+                >
+                  <option value="">الجنس</option>
+                  <option value="ذكر">ذكر</option>
+                  <option value="أنثى">أنثى</option>
+                </select>
               </div>
               {errors.gender && (
-                <span className="text-red-600 text-xs mt-1" role="alert">{errors.gender}</span>
+                <span id="gender-error" className="text-red-600 text-xs mt-1" role="alert">{errors.gender}</span>
               )}
             </div>
             {/* Age */}
             <div className="flex flex-col w-full">
-              <div className="flex items-center border border-gray-300 px-3 py-2 rounded-lg">
-              <FaCalendarAlt className="text-[#6B297A] text-xl md:text-2xl ml-1 md:ml-2" />
+              <div className="flex items-center rounded-lg overflow-hidden hover:border-[#6B297A] transition-colors duration-200 group focus-within:border-[#6B297A] border border-gray-300">
+                <div className="px-3 py-2.5 bg-gray-50 border-l border-gray-300 group-hover:border-[#6B297A] group-focus-within:border-[#6B297A] transition-colors duration-200">
+                  <FaCalendarAlt className="text-[#6B297A] w-5 h-5 group-hover:scale-110 group-focus-within:scale-110 transition-transform duration-200" />
+                </div>
                 <input
-                  type="number"
-                  className="bg-transparent outline-none text-gray-700 w-full text-right text-sm md:text-base"
+                  type="text"
+                  inputMode="numeric"
+                  id="age"
                   name="age"
+                  className="bg-gray-50 text-gray-900 text-sm focus:ring-0 focus:outline-none block w-full p-2.5 text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none placeholder-gray-900"
                   value={formData.age}
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (value === '' || (/^\d+$/.test(value) && parseInt(value) >= 1)) {
+                      handleChange(e);
+                    }
+                  }}
                   placeholder="العمر"
-                  min="1"
                   aria-label="العمر"
                   aria-describedby={errors.age ? "age-error" : undefined}
                   required
+                  dir="rtl"
                 />
               </div>
               {errors.age && (
@@ -226,21 +282,25 @@ const Appointment = () => {
             </div>
             {/* Mobile */}
             <div className="flex flex-col w-full">
-              <div className="flex items-center border border-gray-300 px-3 py-2 rounded-lg">
-              <FaPhone className="text-[#6B297A] ml-1 md:ml-2 text-xl md:text-2xl" />
+              <div className="flex items-center rounded-lg overflow-hidden hover:border-[#6B297A] transition-colors duration-200 group focus-within:border-[#6B297A] border border-gray-300">
+                <div className="px-3 py-2.5 bg-gray-50 border-l border-gray-300 group-hover:border-[#6B297A] group-focus-within:border-[#6B297A] transition-colors duration-200">
+                  <FaPhone className="text-[#6B297A] w-5 h-5 group-hover:scale-110 group-focus-within:scale-110 transition-transform duration-200" />
+                </div>
                 <input
                   type="tel"
+                  id="phone"
+                  name="phone"
+                  className="bg-gray-50 text-gray-900 text-sm focus:ring-0 focus:outline-none block w-full p-2.5 text-right placeholder-gray-900"
                   placeholder="رقم الجوال"
-                  className="bg-transparent outline-none text-gray-700 w-full text-right text-sm md:text-base"
-                  name="mobile"
-                  value={formData.mobile}
-                  onChange={handleChange}
-                  pattern="^05\d{8}$"
-                  title="رقم الجوال يجب أن يكون 10 أرقام ويبدأ بـ 05"
-                  maxLength={10}
-                  aria-label="رقم الجوال"
-                  aria-describedby={errors.mobile ? "mobile-error" : undefined}
+                  value={formData.phone}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (/^\d*$/.test(value)) {
+                      handleChange(e);
+                    }
+                  }}
                   required
+                  dir="rtl"
                 />
               </div>
               {errors.mobile && (
@@ -253,10 +313,14 @@ const Appointment = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
             {/* Clinic */}
             <div className="flex flex-col w-full">
-              <div className="flex items-center border border-gray-300 px-3 py-2 rounded-lg flex-row-reverse">
+              <div className="flex items-center rounded-lg overflow-hidden hover:border-[#6B297A] transition-colors duration-200 group focus-within:border-[#6B297A] border border-gray-300">
+                <div className="px-3 py-2.5 bg-gray-50 border-l border-gray-300 group-hover:border-[#6B297A] group-focus-within:border-[#6B297A] transition-colors duration-200">
+                  <FaHospital className="text-[#6B297A] w-5 h-5 group-hover:scale-110 group-focus-within:scale-110 transition-transform duration-200" />
+                </div>
                 <select
-                  className="bg-transparent outline-none text-gray-700 w-full text-right text-sm md:text-base"
+                  id="clinic"
                   name="clinic"
+                  className="bg-gray-50 text-gray-900 text-sm focus:ring-0 focus:outline-none block w-full p-2.5 text-right appearance-none placeholder-gray-500"
                   value={formData.clinic}
                   onChange={handleClinicChange}
                   aria-label="العيادة"
@@ -269,7 +333,7 @@ const Appointment = () => {
                     <option key={c.value} value={c.value}>{c.label}</option>
                   ))}
                 </select>
-                <FaClinicMedical className="text-[#6B297A] ml-1 md:ml-2 text-xl md:text-2xl" />
+
               </div>
               {errors.clinic && (
                 <span id="clinic-error" className="text-red-600 text-xs mt-1" role="alert">{errors.clinic}</span>
@@ -277,10 +341,14 @@ const Appointment = () => {
             </div>
             {/* Doctor */}
             <div className="flex flex-col w-full">
-              <div className="flex items-center border border-gray-300 px-3 py-2 rounded-lg flex-row-reverse">
+              <div className="flex items-center rounded-lg overflow-hidden hover:border-[#6B297A] transition-colors duration-200 group focus-within:border-[#6B297A] border border-gray-300">
+                <div className="px-3 py-2.5 bg-gray-50 border-l border-gray-300 group-hover:border-[#6B297A] group-focus-within:border-[#6B297A] transition-colors duration-200">
+                  <FaUserMd className="text-[#6B297A] w-5 h-5 group-hover:scale-110 group-focus-within:scale-110 transition-transform duration-200" />
+                </div>
                 <select
-                  className="bg-transparent outline-none text-gray-700 w-full text-right text-sm md:text-base"
+                  id="doctor"
                   name="doctor"
+                  className="bg-gray-50 text-gray-900 text-sm focus:ring-0 focus:outline-none block w-full p-2.5 text-right appearance-none placeholder-gray-500"
                   value={formData.doctor}
                   onChange={handleChange}
                   aria-label="الطبيب"
@@ -294,7 +362,6 @@ const Appointment = () => {
                     <option key={doc} value={doc}>{doc}</option>
                   ))}
                 </select>
-                <FaUserMd className="text-[#6B297A] ml-1 md:ml-2 text-xl md:text-2xl" />
               </div>
               {errors.doctor && (
                 <span id="doctor-error" className="text-red-600 text-xs mt-1" role="alert">{errors.doctor}</span>
@@ -303,31 +370,52 @@ const Appointment = () => {
             {/* Appointment Date */}
             <div className="flex flex-col w-full md:col-span-2">
               <div className="relative w-full">
-                <div className="absolute inset-y-0 end-0 flex items-center pe-3.5 pointer-events-none">
-                  <svg className="w-5 h-5 text-[#6B297A]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
-                  </svg>
-                </div>
-                <input
-                  type="date"
-                  id="appointmentDate"
-                  className="bg-white border border-gray-300 text-gray-700 text-sm rounded-lg focus:ring-[#6B297A] focus:border-[#6B297A] block w-full pe-10 p-2.5 text-right"
-                  name="appointmentDate"
-                  value={formData.appointmentDate}
-                  onChange={handleChange}
-                  min={new Date().toISOString().split('T')[0]}
-                  aria-label="تاريخ الموعد"
-                  aria-describedby={errors.appointmentDate ? "date-error" : undefined}
-                  required
-                  dir="rtl"
-                  style={{ colorScheme: 'light' }}
-                  placeholder="اختر التاريخ"
-                />
-                {formData.appointmentDate && (
-                  <div className="absolute inset-0 pointer-events-none flex items-center pe-10 justify-end">
-                    <span className="text-gray-700">{formatDateToArabic(formData.appointmentDate)}</span>
+                <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden hover:border-[#6B297A] transition-colors duration-200">
+                  <div className="px-3 py-2 bg-gray-50 border-l border-gray-300">
+                    <svg className="w-5 h-5 text-[#6B297A]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+                    </svg>
                   </div>
-                )}
+                  <div className="flex-1 relative">
+                    <input
+                      type="text"
+                      readOnly
+                      onClick={(e) => {
+                        const dateInput = document.createElement('input');
+                        dateInput.type = 'date';
+                        dateInput.style.position = 'fixed';
+                        dateInput.style.top = '50%';
+                        dateInput.style.left = '50%';
+                        dateInput.style.transform = 'translate(-50%, -50%)';
+                        dateInput.style.opacity = '0';
+                        dateInput.min = new Date().toISOString().split('T')[0];
+                        dateInput.max = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+                        dateInput.value = formData.appointmentDate;
+                        dateInput.onchange = (event) => {
+                          handleChange({
+                            target: {
+                              name: 'appointmentDate',
+                              value: event.target.value
+                            }
+                          });
+                          document.body.removeChild(dateInput);
+                        };
+                        document.body.appendChild(dateInput);
+                        dateInput.showPicker();
+                        dateInput.addEventListener('cancel', () => {
+                          document.body.removeChild(dateInput);
+                        });
+                      }}
+                      value={formData.appointmentDate ? `${formatDateToArabic(formData.appointmentDate)} - ${new Date(formData.appointmentDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}` : ''}
+                      placeholder="اختر التاريخ"
+                      className="block w-full px-4 py-2.5 text-right bg-gray-50 text-gray-900 text-sm focus:outline-none placeholder-black cursor-pointer"
+                      aria-label="تاريخ الموعد"
+                      aria-describedby={errors.appointmentDate ? "date-error" : undefined}
+                      required
+                      dir="rtl"
+                    />
+                  </div>
+                </div>
               </div>
               {errors.appointmentDate && (
                 <span id="date-error" className="text-red-600 text-xs mt-1" role="alert">{errors.appointmentDate}</span>

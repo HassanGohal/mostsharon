@@ -17,6 +17,7 @@ import img15 from "../assets/Gallery_pics/15.jpeg";
 import img16 from "../assets/Gallery_pics/16.jpeg";
 
 import { useState, useEffect } from "react";
+import { IoChevronBackOutline, IoChevronForwardOutline } from "react-icons/io5";
 
 const images = [
     img1, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11, img12, img13, img14, img15, img16
@@ -27,17 +28,17 @@ const Gallery = () => {
 
     useEffect(() => {
         const interval = setInterval(() => {
-            setActiveSlide((current) => (current + 1) % images.length);
-        }, 3000);
+            setActiveSlide((current) => (current + 2) % images.length);
+        }, 4000);
         return () => clearInterval(interval);
     }, []);
 
     const nextSlide = () => {
-        setActiveSlide((current) => (current + 1) % images.length);
+        setActiveSlide((current) => (current + 2) % images.length);
     };
 
     const prevSlide = () => {
-        setActiveSlide((current) => (current - 1 + images.length) % images.length);
+        setActiveSlide((current) => (current - 2 + images.length) % images.length);
     };
 
     return (
@@ -49,53 +50,73 @@ const Gallery = () => {
                 </div>
 
                 {/* Carousel */}
-                <div className="relative w-full max-w-5xl mx-auto" data-carousel="slide">
-                    {/* Carousel wrapper */}
-                    <div className="relative h-56 overflow-hidden rounded-lg md:h-[32rem] border-4 border-[#6B297A] shadow-xl">
-                        {images.map((image, index) => (
-                            <div
-                                key={index}
-                                className={`absolute w-full h-full duration-700 ease-in-out transform ${index === activeSlide ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}
-                                data-carousel-item={index === activeSlide ? 'active' : ''}
-                            >
+                <div className="relative w-full max-w-5xl mx-auto px-4 md:px-12">
+                    <div className="flex justify-center gap-8 w-full">
+                        {/* Single Image Container for Mobile */}
+                        <div className="relative w-full max-w-2xl block md:hidden" data-carousel="slide">
+                            <div className="relative h-64 overflow-hidden rounded-lg border-4 border-[#6B297A] shadow-xl">
                                 <img
-                                    src={image}
-                                    className="absolute block w-full h-full object-cover -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                                    alt={`gallery-${index + 1}`}
+                                    src={images[activeSlide]}
+                                    className="absolute w-full h-full object-cover object-center"
+                                    alt={`gallery-${activeSlide + 1}`}
                                 />
                             </div>
-                        ))}
+                        </div>
+
+                        {/* Two Image Containers for Desktop */}
+                        <div className="hidden md:flex justify-center gap-8 w-full">
+                            {/* First Image */}
+                            <div className="relative w-full max-w-xl" data-carousel="slide">
+                                <div className="relative h-80 overflow-hidden rounded-lg border-4 border-[#6B297A] shadow-xl">
+                                    <img
+                                        src={images[activeSlide]}
+                                        className="absolute w-full h-full object-cover object-center"
+                                        alt={`gallery-${activeSlide + 1}`}
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Second Image */}
+                            <div className="relative w-full max-w-xl" data-carousel="slide">
+                                <div className="relative h-80 overflow-hidden rounded-lg border-4 border-[#6B297A] shadow-xl">
+                                    <img
+                                        src={images[(activeSlide + 1) % images.length]}
+                                        className="absolute w-full h-full object-cover object-center"
+                                        alt={`gallery-${((activeSlide + 1) % images.length) + 1}`}
+                                    />
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    {/* Slider controls */}
+                    {/* Slider controls - Hidden on mobile, visible on desktop */}
                     <button
                         type="button"
-                        className="absolute top-0 start-0 z-30 hidden sm:flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none hover:-translate-x-1 transition-transform duration-300"
+                        className="hidden md:block absolute top-1/2 -translate-y-1/2 -left-16 z-30 cursor-pointer focus:outline-none"
                         onClick={prevSlide}
                     >
-                        <span 
-                            className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-[#6B297A] text-white shadow-lg transform transition-all duration-300 group-hover:bg-[#C9E165] group-hover:text-[#6B297A] group-hover:scale-110"
-                        >
-                            <svg className="w-4 h-4 text-white rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 1 1 5l4 4"/>
-                            </svg>
-                            <span className="sr-only">Previous</span>
-                        </span>
+                        <IoChevronBackOutline className="w-10 h-10 text-[#6B297A] hover:text-[#C9E165] transition-colors duration-300" />
+                        <span className="sr-only">Previous</span>
                     </button>
                     <button
                         type="button"
-                        className="absolute top-0 end-0 z-30 hidden sm:flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none hover:translate-x-1 transition-transform duration-300"
+                        className="hidden md:block absolute top-1/2 -translate-y-1/2 -right-16 z-30 cursor-pointer focus:outline-none"
                         onClick={nextSlide}
                     >
-                        <span 
-                            className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-[#6B297A] text-white shadow-lg transform transition-all duration-300 group-hover:bg-[#C9E165] group-hover:text-[#6B297A] group-hover:scale-110"
-                        >
-                            <svg className="w-4 h-4 text-white rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 9 4-4-4-4"/>
-                            </svg>
-                            <span className="sr-only">Next</span>
-                        </span>
+                        <IoChevronForwardOutline className="w-10 h-10 text-[#6B297A] hover:text-[#C9E165] transition-colors duration-300" />
+                        <span className="sr-only">Next</span>
                     </button>
+
+                    {/* Custom Navigation Styles */}
+                    <style>
+                        {`
+                            @media (max-width: 768px) {
+                                .gallery-button-next, .gallery-button-prev {
+                                    display: none !important;
+                                }
+                            }
+                        `}
+                    </style>
                 </div>
             </div>
         </section>

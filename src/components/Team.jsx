@@ -11,6 +11,7 @@ import teamManar from "../assets/team/team-manar.png";
 import teamMonera from "../assets/team/team-monera.png";
 import teamOsama from "../assets/team/team-osama.png";
 import teamSharaf from "../assets/team/team-sharaf.png";
+import teamTahani from "../assets/team/team-tahani.png";
 
 const Team = () => {
   return (
@@ -41,6 +42,7 @@ const Team = () => {
               { img: teamMonera },
               { img: teamOsama },
               { img: teamSharaf },
+              { img: teamTahani },
             ].map((member, index) => (
               <SwiperSlide key={index}>
                 <div className="flex w-full flex-col items-center justify-center overflow-hidden">
