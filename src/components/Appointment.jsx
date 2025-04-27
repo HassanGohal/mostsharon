@@ -108,6 +108,7 @@ const Appointment = () => {
     if (!formData.name.trim()) errs.name = "الاسم مطلوب";
     if (!formData.gender) errs.gender = "يرجى اختيار الجنس";
     if (!formData.age || +formData.age < 1) errs.age = "العمر غير صحيح";
+    if (!formData.mobile || formData.mobile.length < 10) errs.mobile = "رقم الجوال غير صحيح - يجب أن يكون 10 أرقام";
     if (!formData.clinic) errs.clinic = "يرجى اختيار العيادة";
     if (!formData.doctor) errs.doctor = "يرجى اختيار الطبيب";
     if (!formData.appointmentDate) errs.appointmentDate = "يرجى اختيار التاريخ";
@@ -118,9 +119,18 @@ const Appointment = () => {
   // Handle input change
   const handleChange = (e) => {
     const { name, value } = e.target;
+    let newValue = value;
+    if (name === "mobile") {
+      // حذف كل شيء ما عدا الأرقام
+      newValue = value.replace(/[^0-9]/g, "");
+      // إضافة 0 في البداية إذا بدأ الرقم بـ 5
+      if (newValue.startsWith('5') && newValue.length === 9) {
+        newValue = '0' + newValue;
+      }
+    }
     setFormData(prev => ({
       ...prev,
-      [name]: name === "mobile" ? value.replace(/\D/g, "") : value,
+      [name]: newValue
     }));
     setErrors(prev => ({ ...prev, [name]: undefined }));
   };
@@ -150,7 +160,6 @@ const Appointment = () => {
     setTimeout(() => {
       window.open(url, "_blank");
       setSubmitting(false);
-      setToast("تم إرسال طلب الحجز بنجاح! سنتواصل معك قريبًا.");
       setFormData(initialForm);
     }, 1200);
   };
@@ -209,7 +218,7 @@ const Appointment = () => {
                   value={formData.name}
                   onChange={(e) => {
                     const value = e.target.value;
-                    if (value === '' || /^[\u0600-\u06FF\s]*[a-zA-Z\s]*$/.test(value)) {
+                    if (value === '' || /^[\u0600-\u06FF\sa-zA-Z\s]*$/.test(value)) {
                       handleChange(e);
                     }
                   }}
@@ -288,11 +297,11 @@ const Appointment = () => {
                 </div>
                 <input
                   type="tel"
-                  id="phone"
-                  name="phone"
+                  id="mobile"
+                  name="mobile"
                   className="bg-gray-50 text-gray-900 text-sm focus:ring-0 focus:outline-none block w-full p-2.5 text-right placeholder-gray-900"
                   placeholder="رقم الجوال"
-                  value={formData.phone}
+                  value={formData.mobile}
                   onChange={(e) => {
                     const value = e.target.value;
                     if (/^\d*$/.test(value)) {
