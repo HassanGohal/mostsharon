@@ -16,102 +16,75 @@ import img14 from "../assets/Gallery_pics/14.jpeg";
 import img15 from "../assets/Gallery_pics/15.jpeg";
 import img16 from "../assets/Gallery_pics/16.jpeg";
 
-import { useState, useEffect } from "react";
-import { IoChevronBackOutline, IoChevronForwardOutline } from "react-icons/io5";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
 
 const images = [
     img1, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11, img12, img13, img14, img15, img16
 ];
 
 const Gallery = () => {
-    const [activeSlide, setActiveSlide] = useState(0);
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setActiveSlide((current) => (current + 2) % images.length);
-        }, 4000);
-        return () => clearInterval(interval);
-    }, []);
-
-    const nextSlide = () => {
-        setActiveSlide((current) => (current + 2) % images.length);
-    };
-
-    const prevSlide = () => {
-        setActiveSlide((current) => (current - 2 + images.length) % images.length);
-    };
-
     return (
         <section className="py-28 bg-white font-['Almarai']" id="gallery">
             <div className="container mx-auto px-4">
                 {/* Section Header */}
                 <div className="text-center mb-12">
                     <h2 className="text-4xl font-bold text-[#6B297A]">معرض الصور</h2>
+                    <p className="text-lg text-gray-600 max-w-3xl mx-auto mt-4">
+                        نقدم لكم لمحة عن مركزنا وخدماتنا من خلال هذه الصور
+                    </p>
                 </div>
 
-                {/* Carousel */}
-                <div className="relative w-full max-w-5xl mx-auto px-4 md:px-12">
-                    <div className="flex justify-center gap-8 w-full">
-                        {/* Single Image Container for Mobile */}
-                        <div className="relative w-full max-w-2xl block md:hidden" data-carousel="slide">
-                            <div className="relative h-64 overflow-hidden rounded-lg border-4 border-[#6B297A] shadow-xl">
-                                <img
-                                    src={images[activeSlide]}
-                                    className="absolute w-full h-full object-cover object-center"
-                                    alt={`gallery-${activeSlide + 1}`}
-                                />
-                            </div>
-                        </div>
-
-                        {/* Two Image Containers for Desktop */}
-                        <div className="hidden md:flex justify-center gap-8 w-full">
-                            {/* First Image */}
-                            <div className="relative w-full max-w-xl" data-carousel="slide">
-                                <div className="relative h-80 overflow-hidden rounded-lg border-4 border-[#6B297A] shadow-xl">
-                                    <img
-                                        src={images[activeSlide]}
-                                        className="absolute w-full h-full object-cover object-center"
-                                        alt={`gallery-${activeSlide + 1}`}
-                                    />
-                                </div>
-                            </div>
-
-                            {/* Second Image */}
-                            <div className="relative w-full max-w-xl" data-carousel="slide">
-                                <div className="relative h-80 overflow-hidden rounded-lg border-4 border-[#6B297A] shadow-xl">
-                                    <img
-                                        src={images[(activeSlide + 1) % images.length]}
-                                        className="absolute w-full h-full object-cover object-center"
-                                        alt={`gallery-${((activeSlide + 1) % images.length) + 1}`}
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Slider controls - Hidden on mobile, visible on desktop */}
-                    <button
-                        type="button"
-                        className="hidden md:block absolute top-1/2 -translate-y-1/2 -left-16 z-30 cursor-pointer focus:outline-none"
-                        onClick={prevSlide}
+                {/* Gallery Grid with Swiper */}
+                <div className="relative">
+                    <Swiper
+                        modules={[Navigation, Autoplay]}
+                        spaceBetween={20}
+                        slidesPerView={1}
+                        navigation={true}
+                        loop={true}
+                        autoplay={{
+                            delay: 3000,
+                            disableOnInteraction: false,
+                        }}
+                        breakpoints={{
+                            640: {
+                                slidesPerView: 1,
+                            },
+                            768: {
+                                slidesPerView: 2,
+                            },
+                            1024: {
+                                slidesPerView: 2,
+                            },
+                        }}
+                        className="mySwiper"
                     >
-                        <IoChevronBackOutline className="w-10 h-10 text-[#6B297A] hover:text-[#C9E165] transition-colors duration-300" />
-                        <span className="sr-only">Previous</span>
-                    </button>
-                    <button
-                        type="button"
-                        className="hidden md:block absolute top-1/2 -translate-y-1/2 -right-16 z-30 cursor-pointer focus:outline-none"
-                        onClick={nextSlide}
-                    >
-                        <IoChevronForwardOutline className="w-10 h-10 text-[#6B297A] hover:text-[#C9E165] transition-colors duration-300" />
-                        <span className="sr-only">Next</span>
-                    </button>
+                        {images.map((image, index) => (
+                            <SwiperSlide key={index}>
+                                <div className="relative group overflow-hidden rounded-xl">
+                                    <img
+                                        src={image}
+                                        alt={`Gallery Image ${index + 1}`}
+                                        className="w-full h-[300px] md:h-[400px] object-cover transform group-hover:scale-110 transition-transform duration-500"
+                                    />
+                                    <div className="absolute inset-0 bg-[#6B297A]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                </div>
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
 
-                    {/* Custom Navigation Styles */}
+                    {/* Custom Swiper Styles */}
                     <style>
                         {`
+                            .swiper {
+                                padding: 20px 0;
+                            }
+
                             @media (max-width: 768px) {
-                                .gallery-button-next, .gallery-button-prev {
+                                .swiper-button-next, .swiper-button-prev {
                                     display: none !important;
                                 }
                             }

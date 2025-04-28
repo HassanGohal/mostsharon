@@ -6,34 +6,50 @@ const Navbar = () => {
     const [activeSection, setActiveSection] = useState('');
 
     useEffect(() => {
-        const handleScroll = () => {
-            const scrollPosition = window.scrollY;
-            
-            // Check if we're at the top (home/header section)
-            if (scrollPosition < 100) {
-                setActiveSection('hero');
-                return;
-            }
+        const sections = ['hero', 'about', 'services', 'team', 'gallery', 'partners', 'appointment'];
+        const observerOptions = {
+            root: null,
+            rootMargin: '-45% 0px -45% 0px', // Only consider the middle 10% of the viewport
+            threshold: 0.1, // Trigger when even a small part of the element enters the middle area
+        };
 
-            const sections = ['team', 'about', 'services', 'gallery', 'appointment'];
-            const viewPosition = scrollPosition + 100; // Reduced offset for better detection
-
-            for (const section of sections) {
-                const element = document.getElementById(section);
-                if (element) {
-                    const top = element.offsetTop;
-                    const height = element.offsetHeight;
-                    if (viewPosition >= top && viewPosition < top + height) {
-                        setActiveSection(section);
-                        break;
-                    }
+        const observerCallback = (entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    setActiveSection(entry.target.id);
                 }
+            });
+        };
+
+        const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+        // Observe all sections
+        sections.forEach(section => {
+            const element = document.getElementById(section);
+            if (element) {
+                observer.observe(element);
+            }
+        });
+
+        // Special case for hero section when at the very top
+        const handleScroll = () => {
+            if (window.scrollY < 100) {
+                setActiveSection('hero');
             }
         };
 
         window.addEventListener('scroll', handleScroll);
         handleScroll(); // Call it initially
-        return () => window.removeEventListener('scroll', handleScroll);
+
+        return () => {
+            sections.forEach(section => {
+                const element = document.getElementById(section);
+                if (element) {
+                    observer.unobserve(element);
+                }
+            });
+            window.removeEventListener('scroll', handleScroll);
+        };
     }, []);
 
     const handleClick = (e, targetId) => {

@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+import "swiper/css";
 
 // Import all partner logos dynamically
 const partnerImages = import.meta.glob('../assets/partners/*');
@@ -8,7 +11,7 @@ const Partners = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Load all partner images
+    // Load all partner logos
     Promise.all(
       Object.entries(partnerImages).map(async ([path, loader]) => {
         const image = await loader();
@@ -26,42 +29,98 @@ const Partners = () => {
 
   if (isLoading) {
     return (
-      <section className="bg-white py-8 font-['Almarai']" id="partners">
-        <div className="flex justify-center items-center py-20">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#6B297A]"></div>
+      <section className="py-28 bg-white font-['Almarai']" id="partners">
+        <div className="container mx-auto px-4">
+          <div className="text-center">
+            <div className="animate-pulse">
+              <div className="h-8 w-48 bg-gray-200 rounded mx-auto mb-4"></div>
+              <div className="h-4 w-96 bg-gray-200 rounded mx-auto"></div>
+            </div>
+          </div>
         </div>
       </section>
     );
   }
 
   return (
-    <section className="py-14 md:py-24 bg-white font-['Almarai']" id="partners">
-      <div className="container px-4 mx-auto">
-        <div className="grid grid-cols-12 mb-4 mb-md-5">
-          <div className="col-span-12 md:col-span-8 md:col-start-3 text-center">
-            <h2 className="text-[32px] font-bold mb-6 text-[#6B297A]">
-              شركاؤنا
-            </h2>
-            <p className="text-lg leading-relaxed opacity-80 md:px-12 text-gray-600">
-              نفخر بشراكتنا مع مجموعة من الشركات الرائدة في تقديم أفضل الخدمات
-            </p>
-          </div>
+    <section className="py-28 bg-white font-['Almarai'] overflow-hidden" id="partners">
+      <div className="container mx-auto">
+        {/* Section Header */}
+        <div className="text-center mb-12 px-4">
+          <h2 className="text-4xl font-bold text-[#6B297A]">شركاء النجاح</h2>
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto mt-4">
+            نفتخر بشراكتنا مع أفضل شركات التأمين الصحي
+          </p>
         </div>
-        <div className="grid grid-cols-12 lg:gap-8">
-          {partners.map((partner) => (
-            <div className="col-span-12 lg:col-span-4 mt-8" key={partner.id}>
-              <div className="group text-center duration-300">
-                <div className="shadow-md px-8 py-10 rounded-xl bg-white hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100">
-                  <img
-                    src={partner.image}
-                    alt={partner.name}
-                    className="h-28 w-auto mx-auto object-contain hover:scale-105 transition-all duration-300"
-                  />
+
+        {/* Partners Slider */}
+        <div className="relative">
+          <Swiper
+            modules={[Autoplay]}
+            spaceBetween={20}
+            slidesPerView={1}
+            loop={true}
+            speed={3000}
+            autoplay={{
+              delay: 0,
+              disableOnInteraction: false,
+              pauseOnMouseEnter: true,
+              reverseDirection: false,
+            }}
+            breakpoints={{
+              640: {
+                slidesPerView: 2,
+                spaceBetween: 20,
+              },
+              768: {
+                slidesPerView: 3,
+                spaceBetween: 25,
+              },
+              1024: {
+                slidesPerView: 4,
+                spaceBetween: 30,
+              },
+              1280: {
+                slidesPerView: 5,
+                spaceBetween: 30,
+              },
+            }}
+            className="partners-swiper px-4"
+          >
+            {partners.map((partner) => (
+              <SwiperSlide key={partner.id}>
+                <div className="group text-center py-4">
+                  <div className="bg-white rounded-xl transition-all duration-300 hover:shadow-md hover:scale-105 p-6">
+                    <img
+                      src={partner.image}
+                      alt={partner.name}
+                      className="h-16 w-auto mx-auto object-contain"
+                    />
+                  </div>
                 </div>
-              </div>
-            </div>
-          ))}
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </div>
+
+        {/* Custom Swiper Styles */}
+        <style>
+          {`
+            .partners-swiper {
+              overflow: hidden;
+              margin: 0 auto;
+            }
+            .partners-swiper .swiper-wrapper {
+              transition-timing-function: linear !important;
+            }
+            .partners-swiper .swiper-slide {
+              height: auto;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
+          `}
+        </style>
       </div>
     </section>
   );

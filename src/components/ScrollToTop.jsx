@@ -12,7 +12,7 @@ const ScrollToTop = () => {
 
   // Show buttons when page is scrolled up to given distance
   const toggleVisibility = () => {
-    if (window.pageYOffset > 300) {
+    if (window.pageYOffset > 0) {
       setIsVisible(true);
     } else {
       setIsVisible(false);
@@ -59,9 +59,10 @@ const ScrollToTop = () => {
       <div className="fixed bottom-6 w-full flex justify-between items-center px-6 z-50 pointer-events-none">
         {/* Scroll to Top Button (Left Side) - always visible */}
         <div className="pointer-events-auto">
+          {/* Scroll to top button */}
           <div
             onClick={scrollToTop}
-            className="cursor-pointer bg-[#C9E165] hover:bg-[#8b3a9e] text-white p-3 rounded-full shadow-lg transition-all duration-300"
+            className={`cursor-pointer bg-[#C9E165] hover:bg-[#8b3a9e] text-white p-3 rounded-full shadow-lg transition-all duration-300 ${!isVisible ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
           >
             <IoIosArrowUp size={20} />
           </div>
@@ -70,7 +71,7 @@ const ScrollToTop = () => {
         <div className="pointer-events-auto">
           {isMobile && (
             <button 
-              className="bg-[#6B297A] text-white px-4 py-2 rounded-full hover:bg-[#C9E165] hover:text-[#6B297A] transition-all duration-300 font-['Almarai'] text-sm shadow-lg"
+              className={`bg-[#6B297A] text-white px-4 py-2 rounded-full hover:bg-[#C9E165] hover:text-[#6B297A] transition-all duration-300 font-['Almarai'] text-sm shadow-lg ${!isVisible ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
               onClick={(e) => handleClick(e, 'appointment')}
             >
               احجز موعدك
@@ -80,7 +81,7 @@ const ScrollToTop = () => {
       </div>
       
       {/* Bottom Divider - only on mobile */}
-      {isMobile && <div className="fixed bottom-0 left-0 w-full h-1 bg-[#C9E165] rounded-full z-40"></div>}
+      {isMobile && <div className={`fixed bottom-0 left-0 w-full h-1 bg-[#C9E165] rounded-full z-40 transition-all duration-300 ${!isVisible ? 'opacity-0' : 'opacity-100'}`}></div>}
     </>
   );
 };
