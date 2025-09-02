@@ -18,10 +18,30 @@ import "aos/dist/aos.css";
 
 const App = () => {
   useEffect(() => {
+    // Initialize AOS
     AOS.init({
       duration: 1000,
       once: false,
       mirror: true,
+    });
+
+    // Ensure page starts at top
+    window.history.scrollRestoration = 'manual';
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'instant'
+    });
+
+    // Add event listener for page visibility changes
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') {
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: 'instant'
+        });
+      }
     });
   }, []);
 
