@@ -1,4 +1,4 @@
-import React from "react";
+
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
@@ -6,9 +6,9 @@ import "swiper/css/navigation";
 
 // Import team images
 import teamAhmad from "../assets/team/team-ahmad.png";
-import teamAmjad from "../assets/team/team-amjad.png";
-import teamManar from "../assets/team/team-manar.png";
-import teamMonera from "../assets/team/team-monera.png";
+
+
+
 import teamOsama from "../assets/team/team-osama.png";
 import teamSharaf from "../assets/team/team-sharaf.png";
 
@@ -36,9 +36,6 @@ const Team = () => {
           >
             {[
               { img: teamAhmad },
-              { img: teamAmjad },
-              { img: teamManar },
-              { img: teamMonera },
               { img: teamOsama },
               { img: teamSharaf },
             ].map((member, index) => (
